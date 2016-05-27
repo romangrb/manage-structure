@@ -3,10 +3,8 @@
   <head>
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/angular-resource/angular-resource.min.js"></script>
-    <script src="bower_components/angular-route/angular-route.min.js">
-    </script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
     <script src="main_app.js"></script>
-    <script src="mongolab_crud_service.js"></script>
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
     
   </head>
@@ -14,6 +12,12 @@
     <h2>  Managment organisation structure </h2>
     <!--   Show throw ng-route   -->
     <div ng-view></div>
+		
+		<!-- init services -->
+		<script src="mongolab_crud_service.js"></script>
+		<!-- init controllers -->
+		<script src="list_ctrl.js"></script>
+		<script src="create_ctrl.js"></script>
 		
   </body>
 </html>

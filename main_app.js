@@ -4,13 +4,7 @@
   
   angular.
       module('structureMng', ['mongolab', 'ngRoute']).
-      config(config).
-      controller('ListCtrl', ListCtrl);
-      
-      function ListCtrl($scope) {
-        $scope.m = 'message';
-        //$scope.companies = Project.query();
-      }
+      config(config);
       
       function config ( $routeProvider ) {
         
@@ -20,16 +14,16 @@
                   controller: 'ListCtrl',
                   controllerAs: 'listVm'
               })
-              /*.when('/edit/:projectId', {
+              .when('/edit/:projectId', {
                   templateUrl: 'list.html',
                   controller: 'EditCtrl',
                   controllerAs: 'editVm'
               })
               .when('/new', {
-                  templateUrl: 'detail.html',
+                  templateUrl: 'create.html',
                   controller: 'CreateCtrl',
-                  controllerAs: 'detailVm'
-              })*/
+                  controllerAs: 'createVm'
+              })
               .otherwise({
                   redirectTo: '/'
               });

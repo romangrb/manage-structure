@@ -6,9 +6,11 @@
       module('structureMng').
       controller('ListCtrl', ListCtrl);
       
-      function ListCtrl($scope, Project) {
-        $scope.m = 'message';
-        //$scope.companies = Project.query();
+      function ListCtrl(Project) {
+        
+        this.tittle = 'All companies';
+        
+        this.companies = Project.query();
         
       }
     
