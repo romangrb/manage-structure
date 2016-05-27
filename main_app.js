@@ -2,33 +2,37 @@
   
   'use strict';
   
-  angular.
-      module('structureMng', ['mongolab', 'ngRoute']).
-      config(config);
+  angular
+      .module('structureMng', [
+           'ngRoute', 
+           'structureMng.services', 
+           'structureMng.controllers'
+      ])
+      .config(config);
       
-      function config ( $routeProvider ) {
-        
-          $routeProvider
-              .when('/', {
-                  templateUrl: 'list.html',
-                  controller: 'ListCtrl',
-                  controllerAs: 'listVm'
-              })
-              .when('/edit/:projectId', {
-                  templateUrl: 'list.html',
-                  controller: 'EditCtrl',
-                  controllerAs: 'editVm'
-              })
-              .when('/new', {
-                  templateUrl: 'create.html',
-                  controller: 'CreateCtrl',
-                  controllerAs: 'createVm'
-              })
-              .otherwise({
-                  redirectTo: '/'
-              });
-              
-      }
+  function config($routeProvider) {
+    
+    $routeProvider
+        .when('/', {
+            templateUrl: 'list.html',
+            controller: 'ListCtrl',
+            controllerAs: 'listVm'
+        })
+        /*.when('/edit/:projectId', {
+            templateUrl: 'list.html',
+            controller: 'EditCtrl',
+            controllerAs: 'editVm'
+        })
+        .when('/new', {
+            templateUrl: 'create.html',
+            controller: 'CreateCtrl',
+            controllerAs: 'createVm'
+        })
+        .otherwise({
+            redirectTo: '/'
+        });*/
+          
+  }
   
 })();
 

@@ -3,15 +3,14 @@
   'use strict';
   
   angular
-      .module('structureMng')
+      .module('structureMng.controllers', [])
       .controller('ListCtrl', ListCtrl);
       
-      function ListCtrl(Project) {
-        
-        this.tittle = 'All companies';
-        
-        this.companies = Project.query();
-        
-      }
+  function ListCtrl() {
+    
+    this.tittle = 'All companies';
+    
+    
+  }
     
 })();

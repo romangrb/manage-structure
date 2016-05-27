@@ -3,14 +3,14 @@
   'use strict';
   
   angular
-      .module('structureMng')
+      .module('structureMng.controllers', [])
       .controller('CreateCtrl', CreateCtrl);
       
-      function CreateCtrl(Project) {
-        
-        this.tittle = 'Add new company';
-        
-      }
-
+  function CreateCtrl() {
+    
+    this.tittle = 'All companies';
+    
+    
+  }
     
 })();
