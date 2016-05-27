@@ -1,0 +1,23 @@
+<input type="text" ng-model="search" class="search-query" placeholder="Search">
+<table>
+  <thead>
+  <tr>
+    <th>name</th>
+    <th>estimated<br>earning</th>
+    <th>parent</th>
+    <th>child_ids</th>
+    <th><a href="#/new"><i class="icon-plus-sign"></i></a></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="company in companies | filter:search | orderBy:'name'">
+    <td>{{company.name}}</td>
+    <td>{{company.income}}</td>
+    <td>{{company.parent_id}}</td>
+    <td>{{company.child_ids}}</td>
+    <td>
+      <a href="#/edit/{{company._id.$oid}}"><i class="icon-pencil"></i></a>
+    </td>
+  </tr>
+  </tbody>
+</table>
