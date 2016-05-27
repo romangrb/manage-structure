@@ -2,9 +2,9 @@
   
   'use strict';
   
-  angular.
-      module('structureMng').
-      controller('ListCtrl', ListCtrl);
+  angular
+      .module('structureMng')
+      .controller('ListCtrl', ListCtrl);
       
       function ListCtrl(Project) {
         

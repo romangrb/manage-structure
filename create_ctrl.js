@@ -2,9 +2,9 @@
   
   'use strict';
   
-  angular.
-      module('structureMng').
-      controller('CreateCtrl', CreateCtrl);
+  angular
+      .module('structureMng')
+      .controller('CreateCtrl', CreateCtrl);
       
       function CreateCtrl(Project) {
         
