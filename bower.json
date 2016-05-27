@@ -1,0 +1,15 @@
+{
+  "name": "menagment-structure",
+  "homepage": "https://github.com/romangrb/manage-structure",
+  "authors": [
+    "Roman <grabarroman@gmail.com>"
+  ],
+  "description": "app for manegement of structure based in angular and mongodb api",
+  "main": "index.html",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "^1.5.5",
+    "angular-route": "^1.5.5",
+    "angular-resource": "^1.5.5"
+  }
+}

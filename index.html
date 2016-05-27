@@ -1,8 +1,9 @@
 <!doctype html>
 <html ng-app="structureMng">
   <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular-resource.min.js">
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js">
     </script>
     <script src="main_app.js"></script>
     <script src="mongolab_crud_service.js"></script>
@@ -13,6 +14,6 @@
     <h2>  Managment organisation structure </h2>
     <!--   Show throw ng-route   -->
     <div ng-view></div>
-    
+		
   </body>
 </html>
