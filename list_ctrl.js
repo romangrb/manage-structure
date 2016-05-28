@@ -3,7 +3,7 @@
   'use strict';
   
   angular
-      .module('structureMng.controllers', [])
+      .module('structureMng.controllers.ListCtrl', [])
       .controller('ListCtrl', ListCtrl);
       
   function ListCtrl(CompaniesFactory) {

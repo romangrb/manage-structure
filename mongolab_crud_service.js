@@ -3,7 +3,7 @@
   'use strict';
   
   angular
-      .module('structureMng.services', ['ngResource'])
+      .module('structureMng.services.mongolab_CRUD', ['ngResource'])
       .factory('CompaniesFactory', function ($resource) {
         
         return $resource('https://api.mongolab.com/api/1/databases' +
