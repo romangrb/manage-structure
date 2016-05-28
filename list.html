@@ -19,7 +19,10 @@
       <td>{{company.parent_id}}</td>
       <td>{{company.child_ids}}</td>
       <td>
-        <a href="#/edit/{{company._id.$oid}}"><i class="icon-pencil"></i></a>
+        <a href="#/edit/?id={{company._id.$oid}}"><i class="icon-pencil"></i></a>
+      </td>
+      <td>
+        <a href="#/remove/?id={{company._id.$oid}}"><i class="icon-trash"></i></a>
       </td>
     </tr>
     </tbody>

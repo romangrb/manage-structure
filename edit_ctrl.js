@@ -6,11 +6,18 @@
       .module('structureMng.controllers.EditCtrl', [])
       .controller('EditCtrl', EditCtrl);
       
-  function EditCtrl(CompanyFactory) {
+  function EditCtrl(CompanyFactory, $location) {
     
-    this.tittle = 'All companies';
+    this.editTittle = 'Edit company';
     
+    this.removeTittle = 'Remove company';
     
+    this.remove = function(){
+        
+      var q = $location.search();
+        console.log(q.id);
+        /*CompanyFactory.remove(q.id);   */
+    };
     
   }
     

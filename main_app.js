@@ -25,8 +25,13 @@
             controller: 'CreateCtrl',
             controllerAs: 'createVm'
         })
-        .when('/edit/:id', {
+        .when('/edit', {
             templateUrl: 'edit.html',
+            controller: 'EditCtrl',
+            controllerAs: 'editVm'
+        })
+        .when('/remove', {
+            templateUrl: 'remove.html',
             controller: 'EditCtrl',
             controllerAs: 'editVm'
         })

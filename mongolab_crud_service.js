@@ -24,7 +24,7 @@
             {
               show: { method: 'GET' },
               update: { method: 'PUT', params: {id: '@id'} },
-              delete: { method: 'DELETE', params: {id: '@id'} }
+              remove: { method: 'DELETE', params: {id: '@id'} }
             }
           );
           
