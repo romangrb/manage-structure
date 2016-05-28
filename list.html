@@ -13,7 +13,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="company in companies | filter:search | orderBy:'name'">
+    <tr ng-repeat="company in listVm.companies | filter:search | orderBy:'name'">
       <td>{{company.name}}</td>
       <td>{{company.income}}</td>
       <td>{{company.parent_id}}</td>
