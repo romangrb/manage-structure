@@ -11,7 +11,7 @@
     this.tittle = 'All companies';
     
     this.companies = CompaniesFactory.query();
-    console.log(this.companies, 2);
+    
   }
     
 })();
