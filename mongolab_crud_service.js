@@ -8,7 +8,27 @@
 
   angular
       .module('structureMng.services', ['ngResource'])
-      .factory('Project', function($resource) {
+      .factory('CompaniesFactory', function ($resource) {
+        
+          return $resource('https://api.mongolab.com/api/1/databases/grbdb/collections/organizations', {}, {   
+              query: { method: 'GET', isArray: true },
+              create: { method: 'POST' }
+          });
+          
+      })
+      .factory('UserFactory', function ($resource) {
+        
+          return $resource('https://api.mongolab.com/api/1/databases/grbdb/collections/organizations:/id', {}, {
+              show: { method: 'GET' },
+              update: { method: 'PUT', params: {id: '@id'} },
+              delete: { method: 'DELETE', params: {id: '@id'} }
+          });
+          
+      });
+      
+      
+      
+      /*.factory('Project', function($resource) {
          
           var Project = $resource(
             'https://api.mongolab.com/api/1/databases/grbdb/collections/organizations/:id',
@@ -26,6 +46,6 @@
           };
       
           return Project;
-      });
+      });*/
   
 })();

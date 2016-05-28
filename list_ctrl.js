@@ -6,10 +6,9 @@
       .module('structureMng.controllers', [])
       .controller('ListCtrl', ListCtrl);
       
-  function ListCtrl() {
+  function ListCtrl(CompaniesFactory) {
     
     this.tittle = 'All companies';
-    
     
   }
     

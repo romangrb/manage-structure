@@ -18,7 +18,7 @@
             controller: 'ListCtrl',
             controllerAs: 'listVm'
         })
-        /*.when('/edit/:projectId', {
+        .when('/edit/:projectId', {
             templateUrl: 'list.html',
             controller: 'EditCtrl',
             controllerAs: 'editVm'
@@ -30,7 +30,7 @@
         })
         .otherwise({
             redirectTo: '/'
-        });*/
+        });
           
   }
   
