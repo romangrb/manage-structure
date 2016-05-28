@@ -8,15 +8,22 @@
       
   function EditCtrl(CompanyFactory, $location) {
     
+    var self = this;
+    
     this.editTittle = 'Edit company';
     
     this.removeTittle = 'Remove company';
     
+    this.query = $location.search() || '';
+    
+    this.responceStatus = ''; 
+    
     this.remove = function(){
-        
-      var q = $location.search();
-        console.log(q.id);
-        /*CompanyFactory.remove(q.id);   */
+      var q = self.query; 
+        CompanyFactory.remove(q, function(cb){
+            console.log(cb);   
+        });
+       
     };
     
   }

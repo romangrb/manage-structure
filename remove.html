@@ -2,10 +2,15 @@
   
   <h6>{{editVm.removeTittle}}</h6>
   
-  <h6> Are you shure to remove this company ? </h6>
+  <h6 ng-show="!editVm.responceStatus"> Are you shure to remove this company ? </h6>
   
-  <a href="#/" class="btn">Cancel</a>
+  <h6>{{editVm.responceStatus}}</h6>
   
-  <button ng-click="editVm.remove()" class="btn btn-danger">Delete</button>
+  <a href="#/" class="btn">Back</a>
+  
+  <button ng-show="!editVm.responceStatus" 
+          ng-click="editVm.remove()" 
+          class="btn btn-danger">Delete
+  </button>
 
 </section>
