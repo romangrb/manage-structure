@@ -19,11 +19,20 @@
     this.responceStatus = ''; 
     
     this.remove = function(){
-      var q = self.query; 
-        CompanyFactory.remove(q, function(cb){
+      
+      var q = self.query;
+      q.id = q.id+2;
+      
+      var success = function(cb){
             console.log(cb);   
-        });
-       
+      };
+        
+      var error = function(err){
+          console.log(err);   
+      };
+      
+      CompanyFactory.show(q, success, error); 
+      
     };
     
   }
