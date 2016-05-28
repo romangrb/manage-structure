@@ -24,7 +24,7 @@
       q.id = q.id+2;
       
       var success = function(cb){
-            console.log(cb);   
+          console.log(cb);   
       };
         
       var error = function(err){

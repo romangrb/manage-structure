@@ -5,7 +5,8 @@
   angular
       .module('structureMng', [
            'ngRoute', 
-           'structureMng.services.mongolab_CRUD', 
+           'structureMng.services.mongolab_CRUD',
+           'structureMng.services.dataService',
            'structureMng.controllers.ListCtrl',
            'structureMng.controllers.CreateCtrl',
            'structureMng.controllers.EditCtrl'
