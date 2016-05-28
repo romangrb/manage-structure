@@ -6,28 +6,29 @@
       .module('structureMng', [
            'ngRoute', 
            'structureMng.services.mongolab_CRUD', 
+           'structureMng.controllers.ListCtrl',
            'structureMng.controllers.CreateCtrl',
-           'structureMng.controllers.ListCtrl'
+           'structureMng.controllers.EditCtrl'
       ])
       .config(config);
 
   function config($routeProvider) {
     
     $routeProvider
-        .when('/edit/:id', {
+        .when('/', {
             templateUrl: 'list.html',
-            controller: 'EditCtrl',
-            controllerAs: 'editVm'
+            controller: 'ListCtrl',
+            controllerAs: 'listVm'
         })
         .when('/new', {
             templateUrl: 'create.html',
             controller: 'CreateCtrl',
             controllerAs: 'createVm'
         })
-        .when('/', {
-            templateUrl: 'list.html',
-            controller: 'ListCtrl',
-            controllerAs: 'listVm'
+        .when('/edit/:id', {
+            templateUrl: 'edit.html',
+            controller: 'EditCtrl',
+            controllerAs: 'editVm'
         })
         .otherwise({
             redirectTo: '/'
