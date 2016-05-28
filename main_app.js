@@ -18,7 +18,7 @@
             controller: 'ListCtrl',
             controllerAs: 'listVm'
         })
-        .when('/edit/:projectId', {
+        .when('/edit/:id', {
             templateUrl: 'list.html',
             controller: 'EditCtrl',
             controllerAs: 'editVm'
@@ -29,7 +29,7 @@
             controllerAs: 'createVm'
         })
         .otherwise({
-            redirectTo: '/'
+            redirectTo: '/new'
         });
           
   }

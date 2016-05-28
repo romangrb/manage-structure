@@ -6,12 +6,12 @@
       .module('structureMng.controllers', [])
       .controller('CreateCtrl', CreateCtrl);
       
-  function CreateCtrl() {
+  function CreateCtrl(CompaniesFactory) {
     
     this.tittle = 'Add new company';
     
-    this.save = function () {
-      //CompaniesFactory.create(collection);
+    this.save = function (company) {
+      CompaniesFactory.create(company);
       //$location.path('/user-list');
     };
     

@@ -20,7 +20,7 @@
       </span>
     </div>
     
-    <div class="control-group">
+    <!--<div class="control-group">
       <label for="selPar">select belong company</label>
       <select class="control-group" id="selPar" 
        name="parent" ng-model="company.parent_id"
@@ -28,10 +28,10 @@
       >
       <option></option>
       </select>
-    </div>
+    </div>-->
       
     <a href="#/" class="btn">Cancel</a>
-    <button ng-click="createVm.save()" ng-disabled="isClean() || createNew.$invalid"
+    <button ng-click="createVm.save(company)" ng-disabled="isClean() || createNew.$invalid"
       class="btn btn-primary">Save</button>
     <button ng-click="createVm.destroy()"
       ng-show="company._id" class="btn btn-danger">Delete</button>
