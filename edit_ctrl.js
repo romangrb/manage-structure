@@ -6,7 +6,7 @@
       .module('structureMng.controllers.EditCtrl', [])
       .controller('EditCtrl', EditCtrl);
       
-  function EditCtrl(dataService, $location) {
+  function EditCtrl($scope, $location, dataService) {
     
     var self = this;
     
@@ -17,19 +17,22 @@
     
     this.potentialParents = (this.query)? 
                                         dataService.getCompanyPotentialParents(this.query):
-                                        '';  
+                                        ''; 
+    this.company = {};
+    
+    this.company = (this.query)? 
+                    dataService.getCompany(this.query, successCb):
+                    '';
+                    
+    var successCb = function(collection){
+        this.company = collection;   
+    };
+                  
     this.save = function(){
       
         (self.query)?
                      dataService.getCompanyPotentialParents(self.query):
                      console.log('n');
-    };
-    
-    this.remove = function(){
-      
-      var q = self.query;
-      q.id = q.id+2;
-      
     };
     
   }

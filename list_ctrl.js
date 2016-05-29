@@ -9,7 +9,7 @@
   function ListCtrl(dataService) {
     
     this.tittle = 'All companies';
-    console.log(1);
+    
     this.companies = dataService.getCompanies();
     
   }

@@ -18,9 +18,9 @@
       
       getCompanies : function(){
           
-          var self = this;
+          var self = this,
           
-          var successCb = function(collection){
+          successCb = function(collection){
             
             self.__tmp_collection = self.__copyArray(collection);
             
@@ -30,11 +30,11 @@
          
       },
       
-     /* unlinkCompany : function(q){
+      getCompany : function(q){
         
-        console.log(q);
-        
-      },*/
+          return CompanyFactory.show(q);
+          
+      },
       
       getCompanyPotentialParents : function(q){
          
@@ -49,6 +49,8 @@
         var self = this;
         
         this.__tmp_collection = '';
+        
+        this.__tmp_company = '';
         
         var _slice = Array.prototype.slice;
         

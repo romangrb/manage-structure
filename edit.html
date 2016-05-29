@@ -4,18 +4,18 @@
   
   <form name="createNew">
     
-    <div class="control-group" ng-class="{error: createNew.name.$invalid}">
+    <div class="control-group" ng-class="{error: editVm.name.$invalid}">
       <label>name</label>
-      <input type="text" name="name" ng-model="company.name" required>
-      <span ng-show="createNew.name.$error.required" class="help-inline">
+      <input type="text" name="name" ng-model="editVm.company.name" required>
+      <span ng-show="editVm.name.$error.required" class="help-inline">
         Required
       </span>
     </div>
     
-    <div class="control-group" ng-class="{error: createNew.income.$invalid}">
+    <div class="control-group" ng-class="{error: editVm.income.$invalid}">
       <label>estimated annual earning</label>
-      <input type="number" name="income" ng-model="company.income" >
-      <span ng-show="createNew.income.$error.required" class="help-inline">
+      <input type="number" name="income" ng-model="editVm.company.income" >
+      <span ng-show="editVm.income.$error.required" class="help-inline">
         Required
       </span>
     </div>
@@ -23,7 +23,7 @@
     <div class="control-group">
       <label for="selPar">select belong company</label>
       <select class="control-group" id="selPar" 
-         name="parent" ng-model="company.parent_id"
+         name="parent" ng-model="editVm.company.parent_id"
          ng-options="company._id.$oid as company.name for company in editVm.potentialParents"
       >
       <option></option>
@@ -31,10 +31,10 @@
     </div>
       
     <a href="#/" class="btn">Cancel</a>
-    <button ng-click="editVm.save(company)" ng-disabled="isClean() || createNew.$invalid"
+    <button ng-click="editVm.save(editVm.company)" ng-disabled="isClean() || createNew.$invalid"
       class="btn btn-primary">Save</button>
     <button ng-click="editVm.destroy()"
-      ng-show="company._id" class="btn btn-danger">Delete</button>
+      ng-show="editVm.company._id" class="btn btn-danger">Delete</button>
       
   </form>
   
