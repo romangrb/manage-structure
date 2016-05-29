@@ -74,7 +74,7 @@
             
           getDescendants(thisCompany);
           
-          console.log(descendants,'desc');
+          getPotentialParents(collection, descendants);
           
           function getDescendants(company){
                   
@@ -107,7 +107,20 @@
               }
                   
           }
-    
+          
+          function getPotentialParents (collection, forbiddenCollection){
+            
+            var arr = forbiddenCollection,
+             potentialParents = collection.find(function(item) {
+              
+              if (arr.some(function(index){
+                  return item._id.$oid !== index._id.$oid;
+              })) return item;
+                
+            });
+            console.log(potentialParents,'p');
+          }
+          
       };
   
     }
