@@ -92,12 +92,16 @@
                     });
                     
                 });
+                
+                getDescendants(descendants);
+                console.log(descendants, collection); 
+              
             }
-            getDescendants(descendants);
+            
             
         }
         
-        console.log(descendants, collection); 
+        
         //}
         
         //CompanyFactory(successCb);
