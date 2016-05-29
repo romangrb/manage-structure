@@ -10,9 +10,7 @@
     
     this.tittle = 'All companies';
     
-    //this.companies = CompaniesFactory.query();
-    var s = new dataService();
-    console.log(s.hello());
+    this.companies = dataService.getCompanies();
     
   }
     
