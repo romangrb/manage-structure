@@ -72,53 +72,64 @@
             tmp_descendants = [],
             new_tmp_descendants = [];
             
+          descendants.push(thisCompany);
+            
           getDescendants(thisCompany);
           
           getPotentialParents(collection, descendants);
           
           function getDescendants(company){
+            
+              if (!company || company.child_ids==null || company.child_ids.length<0) return;
                   
-              if (company.child_ids!=null && company.child_ids.length>0) {
+              var companies = company.child_ids;  
                   
-                  var companies = company.child_ids;  
-                      
-                  collection.forEach(function(item, j, arr) {
-                    
-                      companies.forEach(function(targChild, i, targArr) {
-                          if (targChild == item._id.$oid) tmp_descendants.push(item);
-                      });
-                      
+              collection.forEach(function(item, j, arr) {
+                
+                  companies.forEach(function(targChild, i, targArr) {
+                      if (targChild == item._id.$oid) tmp_descendants.push(item);
                   });
                   
-                  if (tmp_descendants.length>0){
-                    
-                      descendants = descendants.concat(tmp_descendants);
-                      
-                      new_tmp_descendants = self.__copyArray(tmp_descendants);
-                      
-                      tmp_descendants = [];
-                      
-                      new_tmp_descendants.forEach(function(new_item) {
-                          getDescendants(new_item);  
-                      });
-                 
-                  }
+              });
+              
+              if (tmp_descendants.length>0){
+                
+                  descendants = descendants.concat(tmp_descendants);
                   
+                  new_tmp_descendants = self.__copyArray(tmp_descendants);
+                  
+                  tmp_descendants = [];
+                  
+                  new_tmp_descendants.forEach(function(new_item) {
+                    
+                      getDescendants(new_item);  
+                  });
+             
               }
+                  
+              
                   
           }
           
           function getPotentialParents (collection, forbiddenCollection){
-            
+
             var arr = forbiddenCollection,
-             potentialParents = collection.find(function(item) {
-              
-              if (arr.some(function(index){
-                  return item._id.$oid !== index._id.$oid;
-              })) return item;
-                
+              ln = collection.length,
+              potentialParents = [].concat(collection);
+            
+            for (var i = 0; arr.length>i; i++ ){
+                for (var j = 0; ln>j; j++ ){
+                  if (arr[i]._id.$oid === collection[j]._id.$oid){
+                      potentialParents[j] = null;
+                      break;
+                  }
+                }
+            }
+            
+            potentialParents = potentialParents.filter(function(item) {
+                return item != null;
             });
-            console.log(potentialParents,'p');
+          
           }
           
       };
