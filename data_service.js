@@ -63,7 +63,7 @@
           var collection = self.__tmp_collection;
           
           if (collection==null || collection.length<1) return '';
-          //if (arr!=null&&arr.length>0)  
+          
           var thisCompany = collection.find(function(item) {
             return item._id.$oid == q.id;
           });
@@ -71,8 +71,10 @@
           var descendants = [],
             tmp_descendants = [],
             new_tmp_descendants = [];
-          
+            
           getDescendants(thisCompany);
+          
+          console.log(descendants,'desc');
           
           function getDescendants(company){
                   
@@ -105,9 +107,6 @@
               }
                   
           }
-            
-      console.log(descendants,'desc');
-        
     
       };
   

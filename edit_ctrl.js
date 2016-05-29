@@ -18,7 +18,6 @@
     this.potentialParents = (this.query)? 
                                         dataService.getCompanyPotentialParents(this.query):
                                         '';  
-    console.log(this.potentialParents);
     
     this.save = function(){
       
