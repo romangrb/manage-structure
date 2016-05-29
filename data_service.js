@@ -40,6 +40,12 @@
          
           return this.__searchPotentialParents(q);
           
+      },
+      
+      setCompanyChanges : function(q, data){
+         
+          return CompanyFactory.update(q, data);
+          
       }
       
     };

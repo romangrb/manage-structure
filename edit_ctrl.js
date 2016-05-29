@@ -18,21 +18,18 @@
     this.potentialParents = (this.query)? 
                                         dataService.getCompanyPotentialParents(this.query):
                                         ''; 
-    this.company = {};
-    
     this.company = (this.query)? 
                     dataService.getCompany(this.query, successCb):
                     '';
-                    
-    var successCb = function(collection){
-        this.company = collection;   
-    };
                   
-    this.save = function(){
+    this.save = function(newCollection){
       
-        (self.query)?
-                     dataService.getCompanyPotentialParents(self.query):
-                     console.log('n');
+        dataService.setCompanyChanges(self.query, newCollection, successCb);
+       
+    };
+    
+    var successCb = function(collection){
+        this.company = collection; 
     };
     
   }
