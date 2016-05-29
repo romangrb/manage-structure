@@ -38,7 +38,7 @@
       
       getCompanyPotentialParents : function(q){
          
-          this.__searchPotentialParents(q);
+          return this.__searchPotentialParents(q);
           
       }
       
@@ -62,7 +62,7 @@
           
           var collection = self.__tmp_collection;
           
-          if (collection==null || collection.length<1) return '';
+          if (collection == null || collection.length<1) return '';
           
           var thisCompany = collection.find(function(item) {
             return item._id.$oid == q.id;
@@ -76,7 +76,7 @@
             
           getDescendants(thisCompany);
           
-          getPotentialParents(collection, descendants);
+          return getPotentialParents(collection, descendants);
           
           function getDescendants(company){
             
@@ -129,7 +129,9 @@
             potentialParents = potentialParents.filter(function(item) {
                 return item != null;
             });
-          
+            
+            return potentialParents;
+            
           }
           
       };

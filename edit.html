@@ -24,7 +24,7 @@
       <label for="selPar">select belong company</label>
       <select class="control-group" id="selPar" 
          name="parent" ng-model="company.parent_id"
-         ng-options="company._id.$oid as company.name for company in companies"
+         ng-options="company._id.$oid as company.name for company in editVm.potentialParents"
       >
       <option></option>
       </select>

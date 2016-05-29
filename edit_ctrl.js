@@ -18,7 +18,6 @@
     this.potentialParents = (this.query)? 
                                         dataService.getCompanyPotentialParents(this.query):
                                         '';  
-    
     this.save = function(){
       
         (self.query)?
