@@ -255,7 +255,7 @@
                   if (i<2 && tries<maxTry){
                     chain(i, collection);
                   } else {
-                    status.type = 2;
+                    status.type = 0;
                     status.obj = err;
                     return status;
                   }
