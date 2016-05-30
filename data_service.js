@@ -237,34 +237,39 @@
             
             var i = 0,
               status = {type:0, obj:null},
+              ln = collection.length,
               tries = 0,
               maxTry = 2,
               
               successCb = function(cb) {
                   
-                  if (i<1) {
+                  if (i<ln) {
+                    console.log(i, collection[i]);
                     chain(i, collection);
                     ++i;
                     status.type = 1;
                     status.obj = cb;
                   }
-                    
+                    console.log(status);
               }, 
               errorCb = function(err) {
                     
                   ++tries;
-                  if (i<2 && tries<maxTry){
+                  if (i<1 && tries<maxTry){
+                    chain(i, collection);
+                  } else if(i<2 && tries<4){
                     chain(i, collection);
                   } else {
                     status.type = 0;
                     status.obj = err;
                   }
+                  console.log(status);
               };
               
               var chain = function(i, coll){
                 
                 CompanyFactory.update({id:coll[i]._id.$oid}, coll[i], successCb, errorCb);
-                console.log(status);
+                
               };
               
               chain(i, collection);
