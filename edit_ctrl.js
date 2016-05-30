@@ -37,8 +37,23 @@
                   dataService.setCompanyChanges(this.query, newCollection, callback):
                   status;
     };
-   
     
+    this.remove = function(q){
+      
+      var status = {
+        type:0, 
+        obj:{
+          message:""
+        }
+      },
+        callback = function (status){ 
+          console.log(status);   
+      };
+         
+      (this.query)? 
+                  dataService.removeCompany(this.query, callback):
+                  status;
+    };
     
   }
     

@@ -114,7 +114,21 @@
           
           this.__changeParents(collection, cb);
           
+      },
+      
+      removeCompany : function(q, callback){
+        
+          var self = this,
+            
+            cb = function (data){ 
+                self.__removeFatherFromChildren(data, callback);
+                //return callback();
+            };
+         
+        CompanyFactory.remove(q, cb);
+        
       }
+      
       
     };
        
@@ -336,6 +350,70 @@
               chain(i, collection);
               
         };
+        
+        this.__getChildrens = function (collectionIds){
+          
+          var self = this,
+            collection = self.__tmp_collection,
+            collLn = collection.length,
+            arr = collectionIds,
+            ln = arr.length,
+            children = [];
+        
+          if (collection == null || ln<1) return [];
+          
+            for (var i = 0; arr.length>i; i++ ){
+                
+                for (var j = 0; collLn>j; j++ ){
+                  if (collection[i]._id.$oid === arr[j]){
+                      children.push(collection[i]);
+                      break;
+                  }
+                }
+                
+                if (children.length>=ln) break;
+                
+            } 
+            
+            return children;
+          
+          
+        };
+        
+        this.__removeFatherFromChildren = function(collection, callback){
+          
+            var arr = collection,
+              status = {
+                type:1, 
+                obj:[], 
+                message:'done',
+                successQuantity : []
+              };
+            
+            if (!arr.child_ids || arr.child_ids.length<1) return callback(status);
+            
+            var childrensIds = arr.child_ids,
+              ln = childrensIds.length,
+              cb = function(data){
+                status.successQuantity.push(1);
+              },
+              errorCb = function(err){
+                status.type = 3;
+                status.obj.push(err);
+              };
+            
+            var childrens = self.__getChildrens(childrensIds),
+              chLn = childrens.length;
+            console.log(childrens, 12);
+            for (var i = 0; i<chLn; i++ ){
+                
+                childrens[i].parent_id = '';
+                console.log(childrens);
+              
+            } 
+         
+         
+        }
         
   
     }
