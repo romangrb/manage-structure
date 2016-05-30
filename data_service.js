@@ -42,9 +42,11 @@
           
       },
       
-      setCompanyChanges : function(q, data){
+      setCompanyChanges : function(q, collection){
+          console.log(collection.data.parent_id != collection.oldId);
+          //if (collection.data.parent_id != collection.oldId) this.__changeParents(collection);
          
-          return CompanyFactory.update(q, data);
+          //return CompanyFactory.update(q, collection.data);
           
       }
       
@@ -56,8 +58,6 @@
         
         this.__tmp_collection = '';
         
-        this.__tmp_company = '';
-        
         var _slice = Array.prototype.slice;
         
         this.__copyArray = function(args){
@@ -65,7 +65,7 @@
           return _slice.call(args);
           
         };
-      
+        
         this.__searchPotentialParents = function(q){
           
           var collection = self.__tmp_collection;
@@ -143,6 +143,69 @@
           }
           
       };
+      
+        this.__changeParents = function(company){
+         
+          var companyId = company.data._id.$oid,
+            newParentId = company.data.parent_id,
+            oldParentId = company.oldId,
+            newParent = null,
+            oldParent = null,
+          
+            companies = self.__tmp_collection,
+            ln = companies.length;
+            
+            if (newParentId != null && oldParentId != null){
+              
+                for (var i = 0; ln>i; i++ ){
+                  
+                  if (companies[i]._id.$oid === newParentId) {
+                    newParent = companies[i];
+                  }
+                  
+                  if (companies[i]._id.$oid === newParentId) {
+                    oldParent = companies[i];
+                  }
+                 
+                  if (newParent != null && oldParent != null) break;
+                  
+                }
+              
+            } else if (oldParentId != null){
+              
+                for (var i = 0; ln>i; i++ ){
+                
+                  if (companies[i]._id.$oid === newParentId) {
+                    newParent = companies[i];
+                    break;
+                  }
+                 
+                }
+              
+            } else {
+              
+              for (var i = 0; ln>i; i++ ){
+                
+                  if (companies[i]._id.$oid === oldParentId) {
+                    newParent = companies[i];
+                    break;
+                  }
+                 
+                }
+              
+            }
+              
+            
+          /*var childs = (new_parent_company.child_ids)? new_parent_company.child_ids:[];
+           
+           childs.push(self.original._id.$oid);
+           */
+          
+             
+            
+          
+        };
+        
   
     }
       

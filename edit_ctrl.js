@@ -21,15 +21,22 @@
     this.company = (this.query)? 
                     dataService.getCompany(this.query, successCb):
                     '';
-                  
+    
+    this.oldParentId = this.company.parent_id;
+                 
     this.save = function(newCollection){
-      
-        dataService.setCompanyChanges(self.query, newCollection, successCb);
+        var tmp_changeData = {
+          data : newCollection,
+          oldId : self.oldParentId,
+          
+        };
+        
+        dataService.setCompanyChanges(self.query, tmp_changeData, successCb);
        
     };
     
     var successCb = function(collection){
-        this.company = collection; 
+        this.company = collection;
     };
     
   }
