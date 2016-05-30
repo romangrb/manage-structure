@@ -19,25 +19,17 @@
                                         dataService.getCompanyPotentialParents(this.query):
                                         ''; 
     this.company = (this.query)? 
-                    dataService.getCompany(this.query, successCb):
+                    dataService.getCompany(this.query):
                     '';
     
-    this.oldParentId = this.company.parent_id;
-                 
     this.save = function(newCollection){
-        var tmp_changeData = {
-          data : newCollection,
-          oldId : self.oldParentId,
-          
-        };
         
-        dataService.setCompanyChanges(self.query, tmp_changeData, successCb);
-       
+      (this.query)? 
+                  dataService.setCompanyChanges(this.query, newCollection):
+                  '';
     };
+   
     
-    var successCb = function(collection){
-        this.company = collection;
-    };
     
   }
     
