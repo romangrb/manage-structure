@@ -50,7 +50,7 @@
       setCompanyChanges : function(q, collection){
           
           this.__changeParents(collection);
-         
+          
           //return CompanyFactory.update(q, collection.data);
           
       }
@@ -208,8 +208,7 @@
               
             }
             
-            var childs = ''
-              parent = '';
+            var childs = '';
             
             if (newParent){
              
@@ -242,33 +241,35 @@
               maxTry = 2,
               
               successCb = function(cb) {
-                  if (i<2) {
+                  
+                  if (i<1) {
                     chain(i, collection);
                     ++i;
                     status.type = 1;
                     status.obj = cb;
                   }
-                  return status;
+                    
               }, 
               errorCb = function(err) {
+                    
                   ++tries;
                   if (i<2 && tries<maxTry){
                     chain(i, collection);
                   } else {
                     status.type = 0;
                     status.obj = err;
-                    return status;
                   }
-                  
-                  
               };
               
-              function chain(i, coll){
+              var chain = function(i, coll){
                 
-                  coll[i].update(coll[i]._id.$oid, coll, successCb, errorCb); 
-                  
-              }
-            
+                CompanyFactory.update({id:coll[i]._id.$oid}, coll[i], successCb, errorCb);
+                console.log(status);
+              };
+              
+              chain(i, collection);
+              
+              
         };
         
   
