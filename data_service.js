@@ -154,13 +154,19 @@
         this.__changeParents = function(company){
          
           var companyId = company._id.$oid,
-            newParentId = company.parent_id,
+            newParentId = company.parent_id || "",
             oldParentId = this.__tmp_oldParent,
             newParent = '',
             oldParent = '',
-          
+            changedColl = [],
+            
             companies = self.__tmp_collection,
             ln = companies.length;
+            
+            if (newParentId===oldParentId) {
+              console.log('same');
+              return;
+            }
             
             if (newParentId && oldParentId){
                 
@@ -179,11 +185,11 @@
                 }
               
             } else if (oldParentId){
-              
+               
                 for (var i = 0; ln>i; i++ ){
                 
                   if (companies[i]._id.$oid === oldParentId) {
-                    newParent = companies[i];
+                    oldParent = companies[i];
                     break;
                   }
                  
@@ -201,16 +207,68 @@
                 }
               
             }
-              
-          console.log(newParent, oldParent);  
-          /*var childs = (new_parent_company.child_ids)? new_parent_company.child_ids:[];
-           
-           childs.push(self.original._id.$oid);
-           */
-          
-             
             
+            var childs = ''
+              parent = '';
+            
+            if (newParent){
+             
+              childs = (newParent.child_ids)? newParent.child_ids: []; 
+              childs.push(companyId);
+              newParent.child_ids = childs;
+              changedColl.push(newParent);
+              // {id:newParentId}, newParent
+            } 
+            
+            if (oldParent){
+             
+              childs = oldParent.child_ids; 
+              
+              childs = childs.forEach(function(item, i, arr){
+                if (item === companyId && arr.splice(i, 1)) return;
+              });
+              changedColl.push(oldParent);
+            }
+            
+            self.__bindCollection(changedColl);
           
+        };
+        
+        this.__bindCollection = function (collection){
+            
+            var i = 0,
+              status = {type:0, obj:null},
+              tries = 0,
+              maxTry = 2,
+              
+              successCb = function(cb) {
+                  if (i<2) {
+                    chain(i, collection);
+                    ++i;
+                    status.type = 1;
+                    status.obj = cb;
+                  }
+                  return status;
+              }, 
+              errorCb = function(err) {
+                  ++tries;
+                  if (i<2 && tries<maxTry){
+                    chain(i, collection);
+                  } else {
+                    status.type = 2;
+                    status.obj = err;
+                    return status;
+                  }
+                  
+                  
+              };
+              
+              function chain(i, coll){
+                
+                  coll[i].update(coll[i]._id.$oid, coll, successCb, errorCb); 
+                  
+              }
+            
         };
         
   
