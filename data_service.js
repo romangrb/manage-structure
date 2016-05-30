@@ -41,9 +41,32 @@
           
       },
       
-      getCompanyPotentialParents : function(q){
+      getCompanyPotentialParents : function(q, isNew){
          
-          return this.__searchPotentialParents(q);
+          return (!isNew)? this.__searchPotentialParents(q) : this.getCompanies();
+          
+      },
+      
+      createCompany : function(collection, callback){
+          
+          var self = this,
+            status = {
+              type:0, 
+              obj:null,
+              message:''
+            },
+            
+            successCb = function(cb) {
+                status.type = 1;
+                status.message = 'ok';
+                return callback(status);
+            }, 
+            errorCb = function(err) {
+                status.obj = err;
+                return callback(status);
+            };
+            
+        CompaniesFactory.create(collection, successCb, errorCb);
           
       },
       
