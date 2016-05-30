@@ -47,11 +47,45 @@
           
       },
       
+      updateCompany : function(q, collection, callback){
+          
+          var self = this,
+            status = {
+              type:0, 
+              obj:null,
+              message:''
+            },
+            
+            successCb = function(cb) {
+                status.type = 1;
+                status.message = 'ok';
+                return callback(status);
+            }, 
+            errorCb = function(err) {
+                status.obj = err;
+                return callback(status);
+            };
+            
+        CompanyFactory.update(q, collection, successCb, errorCb);
+          
+      },
+      
       setCompanyChanges : function(q, collection){
           
-          this.__changeParents(collection);
+          var self = this,
+            
+            callback = function (status){ 
+              console.log(status, 'setCompanyChanges');
+            },
+            
+            cb = function (status){ 
+              
+              return (!!status.type) ? 
+                              self.updateCompany(q, collection, callback): 
+                              status;
+            };
           
-          //return CompanyFactory.update(q, collection.data);
+          this.__changeParents(collection, cb);
           
       }
       
@@ -151,7 +185,7 @@
           
       };
       
-        this.__changeParents = function(company){
+        this.__changeParents = function(company, callback){
          
           var companyId = company._id.$oid,
             newParentId = company.parent_id || "",
@@ -159,13 +193,13 @@
             newParent = '',
             oldParent = '',
             changedColl = [],
+            status = {type:1, obj:null},
             
             companies = self.__tmp_collection,
             ln = companies.length;
             
             if (newParentId===oldParentId) {
-              console.log('same');
-              return;
+              return callback(status);
             }
             
             if (newParentId && oldParentId){
@@ -229,11 +263,11 @@
               changedColl.push(oldParent);
             }
             
-            self.__bindCollection(changedColl);
+            return self.__bindCollection(changedColl, callback);
           
         };
         
-        this.__bindCollection = function (collection){
+        this.__bindCollection = function (collection, callback){
             
             var i = 0,
               status = {type:0, obj:null},
@@ -244,13 +278,13 @@
               successCb = function(cb) {
                   
                   if (i<ln) {
-                    console.log(i, collection[i]);
+                    //console.log(i, collection[i]);
                     chain(i, collection);
                     ++i;
                     status.type = 1;
                     status.obj = cb;
                   }
-                    console.log(status);
+                    return callback(status);
               }, 
               errorCb = function(err) {
                     
@@ -263,7 +297,7 @@
                     status.type = 0;
                     status.obj = err;
                   }
-                  console.log(status);
+                  return callback(status);
               };
               
               var chain = function(i, coll){
@@ -273,7 +307,6 @@
               };
               
               chain(i, collection);
-              
               
         };
         

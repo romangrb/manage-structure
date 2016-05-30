@@ -21,12 +21,21 @@
     this.company = (this.query)? 
                     dataService.getCompany(this.query):
                     '';
-    
+                        
     this.save = function(newCollection){
-        
+      
+      var status = {
+        type:0, 
+        obj:{
+          message:"Company indentification issue \n plese try again"}
+      },
+        callback = function (status){ 
+          console.log(status);   
+      };
+         
       (this.query)? 
-                  dataService.setCompanyChanges(this.query, newCollection):
-                  '';
+                  dataService.setCompanyChanges(this.query, newCollection, callback):
+                  status;
     };
    
     
