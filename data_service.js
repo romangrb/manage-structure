@@ -57,9 +57,13 @@
             },
             
             successCb = function(cb) {
+                
+                if (cb.parent_id) self.__changeParents(cb, successCb);
+                
                 status.type = 1;
                 status.message = 'ok';
                 return callback(status);
+                
             }, 
             errorCb = function(err) {
                 status.obj = err;
