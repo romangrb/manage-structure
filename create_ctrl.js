@@ -6,7 +6,7 @@
       .module('structureMng.controllers.CreateCtrl', [])
       .controller('CreateCtrl', CreateCtrl);
       
-  function CreateCtrl(dataService) {
+  function CreateCtrl(dataService, $window) {
     
     var self = this;
     
@@ -24,13 +24,15 @@
           message:"Company indentification issue \n plese try again"}
       },
         callback = function (status){ 
-          console.log(status);   
+          console.log(status);
+          $window.location.href= "#/";    
       };
          
       dataService.createCompany(newCollection, callback);
-                  
-    };                                        
-    
+            
+    };              
+   
+   
   }
     
 })();

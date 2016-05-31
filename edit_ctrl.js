@@ -6,7 +6,7 @@
       .module('structureMng.controllers.EditCtrl', [])
       .controller('EditCtrl', EditCtrl);
       
-  function EditCtrl($scope, $location, dataService) {
+  function EditCtrl($scope, $location, $window, dataService) {
     
     var self = this;
     
@@ -31,7 +31,8 @@
           message:"Company indentification issue \n plese try again"}
       },
         callback = function (status){ 
-          console.log(status);   
+          console.log(status);
+          $window.location.href= "#/";    
       };
          
       (this.query)? 
@@ -48,7 +49,8 @@
         }
       },
         callback = function (status){ 
-          console.log(status);   
+          console.log(status);
+          $window.location.href= "#/";    
       };
          
       (this.query)? 
@@ -65,7 +67,8 @@
         }
       },
         callback = function (status){ 
-          console.log(status);   
+          console.log(status);
+          $window.location.href= "#/";    
       };
          
       (this.query)? 

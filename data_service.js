@@ -502,8 +502,6 @@
               
               CompanyFactory.update({id:selfId}, item, cb, errorCb);
               
-          
-          
         };
         
   
