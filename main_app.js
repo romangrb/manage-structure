@@ -36,6 +36,11 @@
             controller: 'EditCtrl',
             controllerAs: 'editVm'
         })
+        .when('/unlink', {
+            templateUrl: 'unlink.html',
+            controller: 'EditCtrl',
+            controllerAs: 'editVm'
+        })
         .otherwise({
             redirectTo: '/'
         });

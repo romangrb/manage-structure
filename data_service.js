@@ -127,6 +127,19 @@
          
         CompanyFactory.remove(q, cb);
         
+      },
+      
+      unlinkCompany : function(q, callback){
+        console.log(q);
+       /*   var self = this,
+            
+            cb = function (data){ 
+                self.__removeFatherFromChildren(data, callback);
+                self.__removeChildrenFromFather(data, callback);
+            };
+         
+        CompanyFactory.update(q, cb);*/
+        
       }
       
       

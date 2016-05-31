@@ -12,6 +12,7 @@
     
     this.editTittle = 'Edit company';
     this.removeTittle = 'Remove company';
+    this.unlinkTittle = 'Unlink company';
     this.responceStatus = '';
     this.query = $location.search() || '';
     
@@ -52,6 +53,23 @@
          
       (this.query)? 
                   dataService.removeCompany(this.query, callback):
+                  status;
+    };
+    
+    this.unlink = function(q){
+      
+      var status = {
+        type:0, 
+        obj:{
+          message:""
+        }
+      },
+        callback = function (status){ 
+          console.log(status);   
+      };
+         
+      (this.query)? 
+                  dataService.unlinkCompany(this.query, callback):
                   status;
     };
     
