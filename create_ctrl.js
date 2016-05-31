@@ -10,7 +10,7 @@
     
     var self = this;
     
-    this.tittle = 'Add new company';
+    this.tittle = 'New organization';
     
     this.responceStatus = '';
     

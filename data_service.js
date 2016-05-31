@@ -97,18 +97,18 @@
           
       },
       
-      setCompanyChanges : function(q, collection){
+      setCompanyChanges : function(q, collection, callback){
           
           var self = this,
             
-            callback = function (status){ 
-              console.log(status, 'setCompanyChanges');
+            middleCb = function (status){ 
+              return callback(status, 'setCompanyChanges');
             },
             
             cb = function (status){ 
               
               return (!!status.type) ? 
-                              self.updateCompany(q, collection, callback): 
+                              self.updateCompany(q, collection, middleCb): 
                               status;
             };
           
