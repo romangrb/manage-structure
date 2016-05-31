@@ -194,10 +194,7 @@
                     
                       getDescendants(new_item);  
                   });
-             
               }
-                  
-              
                   
           }
           
@@ -364,9 +361,9 @@
           
             for (var i = 0; arr.length>i; i++ ){
                 
-                for (var j = 0; collLn>j; j++ ){
-                  if (collection[i]._id.$oid === arr[j]){
-                      children.push(collection[i]);
+              for (var j = 0; collLn>j; j++ ){
+                  if (collection[j]._id.$oid === arr[i]){
+                      children.push(collection[j]);
                       break;
                   }
                 }
@@ -387,6 +384,7 @@
                 type:1, 
                 obj:[], 
                 message:'done',
+                ln:0,
                 successQuantity : []
               };
             
@@ -396,24 +394,27 @@
               ln = childrensIds.length,
               cb = function(data){
                 status.successQuantity.push(1);
+                ++status.ln;
+                if (status.ln>=chLn) return callback(status);
               },
               errorCb = function(err){
                 status.type = 3;
                 status.obj.push(err);
+                ++status.ln;
+                if (status.ln>=chLn) return callback(status);
               };
             
             var childrens = self.__getChildrens(childrensIds),
-              chLn = childrens.length;
-            console.log(childrens, 12);
-            for (var i = 0; i<chLn; i++ ){
-                
-                childrens[i].parent_id = '';
-                console.log(childrens);
+              chLn = childrens.length,
+              item;
               
-            } 
-         
-         
-        }
+            for (var i = 0; i<chLn; i++ ){
+              item = childrens[i];
+              item.parent_id = '';
+              CompanyFactory.update({id:item._id.$oid}, item, cb, errorCb);
+            }
+             
+        };
         
   
     }
