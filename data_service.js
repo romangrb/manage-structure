@@ -122,7 +122,7 @@
             
             cb = function (data){ 
                 self.__removeFatherFromChildren(data, callback);
-                //return callback();
+                self.__removeChildrenFromFather(data, callback);
             };
          
         CompanyFactory.remove(q, cb);
@@ -412,6 +412,50 @@
               item = childrens[i];
               item.parent_id = '';
               CompanyFactory.update({id:item._id.$oid}, item, cb, errorCb);
+            }
+             
+        };
+        
+        this.__removeChildrenFromFather = function(collection, callback){
+          
+            var arr = collection,
+              selfId = arr._id.$oid,
+              status = {
+                type:1, 
+                obj:[], 
+                message:'done',
+              };
+            
+            if (!arr.parent_id) return callback(status);
+            
+            var fatherIds = arr.parent_id,
+              
+              cb = function(data){
+                status.type = 1;
+                message:'removed from parent';
+                return callback(status);
+              },
+              errorCb = function(err){
+                status.type = 0;
+                status.obj.push(err);
+                return callback(status);
+              };
+            
+            CompanyFactory.show({id:fatherIds}, function(data){
+                
+                var childrensIds = removeFirstMachItem(data.child_ids, selfId);
+                  data.child_ids = childrensIds;
+                  CompanyFactory.update({id:fatherIds},data, cb, errorCb);
+            });
+            
+            function removeFirstMachItem(arr, targ){
+              
+              var ln = arr.length;
+              
+              for (var i = 0; ln>i; i++ ){
+                if (arr[i]===targ && arr.splice(i,1)) return arr;
+              }
+              return arr;
             }
              
         };
