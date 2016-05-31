@@ -17,27 +17,27 @@
     
     $routeProvider
         .when('/', {
-            templateUrl: 'list.html',
+            templateUrl: 'views/list.html',
             controller: 'ListCtrl',
             controllerAs: 'listVm'
         })
         .when('/new', {
-            templateUrl: 'create.html',
+            templateUrl: 'views/create.html',
             controller: 'CreateCtrl',
             controllerAs: 'createVm'
         })
         .when('/edit', {
-            templateUrl: 'edit.html',
+            templateUrl: 'views/edit.html',
             controller: 'EditCtrl',
             controllerAs: 'editVm'
         })
         .when('/remove', {
-            templateUrl: 'remove.html',
+            templateUrl: 'views/remove.html',
             controller: 'EditCtrl',
             controllerAs: 'editVm'
         })
         .when('/unlink', {
-            templateUrl: 'unlink.html',
+            templateUrl: 'views/unlink.html',
             controller: 'EditCtrl',
             controllerAs: 'editVm'
         })

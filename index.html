@@ -1,29 +1,29 @@
 <!doctype html>
+
 <html ng-app="structureMng">
+
   <head>
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/angular-resource/angular-resource.min.js"></script>
     <script src="bower_components/angular-route/angular-route.min.js"></script>
     <script src="main_app.js"></script>
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
-
-    <link href="style.css" rel="stylesheet">
+    <link href="stylesheet/style.css" rel="stylesheet">
   </head>
+  
   <body>
-    <h3 class="col-xs-12 text-center"> Managment organisation structure </h3>
-    <!--   Show throw ng-route   -->
+    <h5 class="col-xs-12 text-center"> Managment organisation structure </h5>
+     <!--content -->
     <div ng-view></div>
-		
-		<!-- init services -->
-		<script src="mongolab_crud_service.js"></script>
-		<script src="data_service.js"></script>
-		<!-- init controllers -->
-		
-		<script src="list_ctrl.js"></script>
-		<script src="create_ctrl.js"></script>
-		<script src="edit_ctrl.js"></script>
-		
+	   
+		 <!--init services -->
+		<script src="services/mongolab_crud_service.js"></script>
+		<script src="services/data_service.js"></script>
+		 <!--init controllers -->
+		<script src="controllers/list_ctrl.js"></script>
+		<script src="controllers/create_ctrl.js"></script>
+		<script src="controllers/edit_ctrl.js"></script>
   </body>
+  
 </html>
