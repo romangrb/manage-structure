@@ -1,41 +1,71 @@
-<section ng-controller="CreateCtrl as createVm">
-  
-  <h3>{{createVm.tittle}}</h3>
-  
-  <form name="createNew">
+<section ng-controller="CreateCtrl as createVm" class="container">
+ 
+  <h4 class="text-center">{{createVm.tittle}}</h4>
+   
+  <form class="form-horizontal" role="form">
     
-    <div class="control-group" ng-class="{error: createVm.company.name.$invalid}">
-      <label>name</label>
-      <input type="text" name="name" ng-model="createVm.company.name" required>
-      <span ng-show="createVm.name.$error.required" class="help-inline">
-        Required
-      </span>
+    <div class="form-group" ng-class="{error: createVm.company.name.$invalid}">
+      <label for="name" class="control-label col-xs-6">Name</label>
+      <div class="col-xs-6 text-center">    
+          <input type="text" 
+                 class="form-control help-inline" 
+                 id="name"
+                 name="name" 
+                 ng-model="createVm.company.name"
+                 placeholder="name ..."
+                 required>
+                         
+          <span ng-show="createVm.name.$error.required" class="help-inline">
+            Required
+          </span>
+      </div>
     </div>
     
-    <div class="control-group" ng-class="{error: createVm.income.$invalid}">
-      <label>estimated annual earning</label>
-      <input type="number" name="income" ng-model="company.income" >
-      <span ng-show="createVm.income.$error.required" class="help-inline">
-        Required
-      </span>
+    <div class="form-group" ng-class="{error: createVm.income.$invalid}">
+      <label for="income" class="control-label col-xs-6">estimated annual earning</label>
+      <div class="col-xs-6 text-center">    
+          <input type="number" 
+                 class="form-control help-inline" 
+                 id="income"
+                 name="income" 
+                 ng-model="createVm.company.income"
+                 placeholder="0"
+                 required>
+               
+          <span ng-show="createVm.income.$error.required" class="help-inline">
+            Required
+          </span>
+      </div>
+    </div>
+   
+
+    <div class="form-group">
+      <label for="parent" class="control-label col-xs-6">chose parent company (if needed)</label>
+      <div class="col-xs-6 text-center">
+          <select class="form-control help-inline"
+                 id="parent" 
+                 name="parent"
+                 ng-model="createVm.company.parent_id"
+                 ng-options="company._id.$oid as company.name for company in createVm.potentialParents"
+          >
+          <option>w</option>
+          
+          </select>
+      </div>
     </div>
     
-    <div class="control-group">
-      <label for="selPar">select belong company</label>
-      <select class="control-group" id="selPar" 
-         name="parent" ng-model="createVm.company.parent_id"
-         ng-options="company._id.$oid as company.name for company in createVm.potentialParents"
-      >
-      <option></option>
-      </select>
+    <div class="col-xs-4 text-center">
+      <a href="#/" class="btn">Cancel</a>
     </div>
-      
-    <a href="#/" class="btn">Cancel</a>
-    <button ng-click="createVm.save(createVm.company)" ng-disabled="isClean() || createVm.$invalid"
-      class="btn btn-primary">Save</button>
-    <button ng-click="createVm.destroy()"
-      ng-show="company._id" class="btn btn-danger">Delete</button>
-      
+    <div class="col-xs-4 text-center">
+      <button ng-click="createVm.save(createVm.company)" ng-disabled="isClean() || createVm.$invalid"
+        class="btn btn-primary">Save
+      </button>
+    </div>
+    <div class="col-xs-4 text-center">
+      <button ng-click="createVm.destroy()"
+        ng-show="company._id" class="btn btn-danger">Delete</button>
+    </div>
   </form>
   
 </section>
