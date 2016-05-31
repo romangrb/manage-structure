@@ -130,15 +130,18 @@
       },
       
       unlinkCompany : function(q, callback){
-        console.log(q);
-       /*   var self = this,
+        
+          var self = this,
             
             cb = function (data){ 
-                self.__removeFatherFromChildren(data, callback);
-                self.__removeChildrenFromFather(data, callback);
+              
+              self.__removeFatherFromChildren(data, callback);
+              self.__removeChildrenFromFather(data, callback);
+              self.__setUnlinked(data, callback);
+              
             };
          
-        CompanyFactory.update(q, cb);*/
+        CompanyFactory.show(q, cb);
         
       }
       
@@ -471,6 +474,36 @@
               return arr;
             }
              
+        };
+        
+        this.__setUnlinked = function(collection, callback){
+          
+            var item = collection,
+              selfId = item._id.$oid,
+              status = {
+                type:1, 
+                obj:[], 
+                message:'done',
+              },
+              
+              cb = function(data){
+                status.type = 1;
+                message:'unlinked';
+                return callback(status);
+              },
+              errorCb = function(err){
+                status.type = 0;
+                status.obj.push(err);
+                return callback(status);
+              };
+              
+              item.parent_id = '',
+              item.child_ids = [];
+              
+              CompanyFactory.update({id:selfId}, item, cb, errorCb);
+              
+          
+          
         };
         
   
