@@ -16,7 +16,7 @@
         if (!data.status) console.log(data);
       };
       
-      (this.query)? dataService.makeTree(this.query, callback): {};
+      //(this.query)? dataService.makeTree(this.query, callback): {};
                     
       this.treeFamily = {
           name : "Parent",
