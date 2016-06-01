@@ -4,47 +4,45 @@
   
   angular
       .module('structureMng', [
-           'ngRoute', 
+           'ngRoute',
+           //'structureMng.services.Tree',
            'structureMng.services.mongolab_CRUD',
            'structureMng.services.dataService',
+           'structureMng.services.RecursionHelper',
            'structureMng.controllers.ListCtrl',
            'structureMng.controllers.CreateCtrl',
-           'structureMng.controllers.EditCtrl'
+           'structureMng.controllers.EditCtrl',
+           //'structureMng.controllers.TreeCtrl'
       ])
       .config(config);
 
-  function config($routeProvider) {
+  function config($routeProvider, $locationProvider) {
     
     $routeProvider
         .when('/', {
-            templateUrl: 'views/list.html',
-            controller: 'ListCtrl',
-            controllerAs: 'listVm'
+            templateUrl: 'views/list.html'
         })
         .when('/new', {
-            templateUrl: 'views/create.html',
-            controller: 'CreateCtrl',
-            controllerAs: 'createVm'
+            templateUrl: 'views/create.html'
         })
         .when('/edit', {
-            templateUrl: 'views/edit.html',
-            controller: 'EditCtrl',
-            controllerAs: 'editVm'
+            templateUrl: 'views/edit.html'
+
         })
         .when('/remove', {
-            templateUrl: 'views/remove.html',
-            controller: 'EditCtrl',
-            controllerAs: 'editVm'
+            templateUrl: 'views/remove.html'
         })
         .when('/unlink', {
-            templateUrl: 'views/unlink.html',
-            controller: 'EditCtrl',
-            controllerAs: 'editVm'
+            templateUrl: 'views/unlink.html'
+        })
+        .when('/tree', {
+            templateUrl: 'views/tree.html'
         })
         .otherwise({
             redirectTo: '/'
         });
-          
+        $locationProvider.html5Mode(false);
+        
   }
   
 })();

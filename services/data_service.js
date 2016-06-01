@@ -9,7 +9,7 @@
             'CompanyFactory', 
             
   function (CompaniesFactory, CompanyFactory){
-     
+   console.log('CompaniesFactory');  
     var Company = {  
         
       constructor : function fn(){

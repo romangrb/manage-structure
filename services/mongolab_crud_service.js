@@ -5,7 +5,7 @@
   angular
       .module('structureMng.services.mongolab_CRUD', ['ngResource'])
       .factory('CompaniesFactory', function ($resource) {
-        
+        console.log('mongolab_CRUD');
         return $resource('https://api.mongolab.com/api/1/databases' +
             '/grbdb/collections/organizations',
             { apiKey: 'umQLTHlfoM-UB68t6YdiiCzRDByzOUQg' }, 

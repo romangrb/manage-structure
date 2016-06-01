@@ -7,7 +7,7 @@
       .controller('CreateCtrl', CreateCtrl);
       
   function CreateCtrl(dataService, $window) {
-    
+    console.log('CreateCtrl');
     var self = this;
     
     this.tittle = 'New organization';
