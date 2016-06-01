@@ -3,15 +3,15 @@
   'use strict';
   
   angular
-      .module('structureMng.controllers.ListCtrl', [])
-      .controller('ListCtrl', ListCtrl);
+      .module('structureMng')
+      .controller('ListCtrl', ['$scope', 'dataService',
+           
+  function ($scope, dataService) {
+            
+      this.tittle = 'All companies';
       
-  function ListCtrl(dataService, RecursionHelper) {
-    console.log('ListCtrl');
-    this.tittle = 'All companies';
-    
-    this.companies = dataService.getCompanies();
-    
-  }
-    
+      this.companies = dataService.getCompanies();
+        
+  }]);
+          
 })();

@@ -3,13 +3,13 @@
   'use strict';
   
   angular
-      .module('structureMng.services.dataService', [])
+      .module('structureMng')
       .service('dataService', [
             'CompaniesFactory', 
             'CompanyFactory', 
             
   function (CompaniesFactory, CompanyFactory){
-   console.log('CompaniesFactory');  
+   
     var Company = {  
         
       constructor : function fn(){

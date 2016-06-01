@@ -1,6 +1,7 @@
 <section ng-controller="ListCtrl as listVm">
   
   <h2 class="text-center">{{listVm.tittle}}</h2>
+  
   <table class="container text-center table table-bordered">
     <thead>
         <tr>
@@ -45,7 +46,7 @@
             <a href="#/edit/?id={{company._id.$oid}}"><i class="glyphicon glyphicon-pencil"></i></a>
           </td>
           <td class="text-center">
-            <a href="#/remove/?id={{company._id.$oid}}"><i class="glyphicon glyphicon glyphicon-trash"></i></a>
+            <a href="#/remove/?id={{company._id.$oid}}"><i class="glyphicon glyphicon-trash"></i></a>
           </td>
           <td class="text-center">
             <a href="#/unlink/?id={{company._id.$oid}}"><i class="glyphicon glyphicon-scissors"></i></a>

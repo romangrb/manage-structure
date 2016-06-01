@@ -3,10 +3,10 @@
   'use strict';
   
   angular
-      .module('structureMng.controllers.CreateCtrl', [])
-      .controller('CreateCtrl', CreateCtrl);
-      
-  function CreateCtrl(dataService, $window) {
+      .module('structureMng')
+      .controller('CreateCtrl', ['dataService', '$window', 
+          
+  function(dataService, $window) {
     console.log('CreateCtrl');
     var self = this;
     
@@ -30,9 +30,8 @@
          
       dataService.createCompany(newCollection, callback);
             
-    };              
-   
-   
-  }
-    
+    };
+  
+  }]);
+          
 })();

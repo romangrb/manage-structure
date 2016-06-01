@@ -9,9 +9,9 @@
   'use strict';
  
     angular
-        .module('structureMng.services.RecursionHelper', [])
+        .module('structureMng')
         .factory('RecursionHelper', ['$compile', function($compile){
-          console.log('RecursionHelper');
+
           	return {
           		/**
           		 * Manually compiles the element, fixing the recursion loop.

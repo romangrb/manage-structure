@@ -3,11 +3,11 @@
   'use strict';
   
   angular
-      .module('structureMng.directives.tree', ['ngRoute'])
-      .directive('Tree', ['dataService', 'RecursionHelper',
+      .module('structureMng')
+      .directive('Tree', ['RecursionHelper',
             
-  function (dataService, RecursionHelper){
-  console.log('directive');
+  function (RecursionHelper){
+  console.log('dir');
     return {
         restrict: "EA",
         scope: {family: '='},

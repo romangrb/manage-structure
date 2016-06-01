@@ -3,19 +3,7 @@
   'use strict';
   
   angular
-      .module('structureMng.mongolab_CRUD', ['ngResource'])
-      .factory('CompaniesFactory', function ($resource) {
-        console.log('mongolab_CRUD');
-        return $resource('https://api.mongolab.com/api/1/databases' +
-            '/grbdb/collections/organizations',
-            { apiKey: 'umQLTHlfoM-UB68t6YdiiCzRDByzOUQg' }, 
-            {
-              query:  { method: 'GET', isArray: true },
-              create: { method: 'POST' }
-            }
-          );
-          
-      })
+      .module('structureMng')
       .factory('CompanyFactory', function ($resource) {
         
         return $resource('https://api.mongolab.com/api/1/databases' +

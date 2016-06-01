@@ -1,48 +1,43 @@
 (function(){
   
   'use strict';
-  
+    
   angular
-      .module('structureMng', [
-           'ngRoute',
-           //'structureMng.services.Tree',
-           'structureMng.services.mongolab_CRUD',
-           'structureMng.services.dataService',
-           'structureMng.services.RecursionHelper',
-           'structureMng.controllers.ListCtrl',
-           'structureMng.controllers.CreateCtrl',
-           'structureMng.controllers.EditCtrl',
-           //'structureMng.controllers.TreeCtrl'
-      ])
-      .config(config);
-
-  function config($routeProvider, $locationProvider) {
+      .module('structureMng', ['ngRoute', 'ngResource'])
+      .config(
+  
+  function($routeProvider, $locationProvider) {
     
     $routeProvider
         .when('/', {
-            templateUrl: 'views/list.html'
+            templateUrl: 'views/list.html',
+            controlleAs: 'listVm'
         })
         .when('/new', {
-            templateUrl: 'views/create.html'
+            templateUrl: 'views/create.html',
+            controlleAs : 'CreateVm'
         })
         .when('/edit', {
-            templateUrl: 'views/edit.html'
-
+            templateUrl: 'views/edit.html',
+            controlleAs : 'EditVm'
         })
         .when('/remove', {
-            templateUrl: 'views/remove.html'
+            templateUrl: 'views/remove.html',
+            controlleAs : 'EditVm'
         })
         .when('/unlink', {
-            templateUrl: 'views/unlink.html'
+            templateUrl: 'views/unlink.html',
+            controlleAs : 'EditVm'
         })
         .when('/tree', {
-            templateUrl: 'views/tree.html'
+            controlleAs: 'views/tree.html'
         })
         .otherwise({
             redirectTo: '/'
         });
-        $locationProvider.html5Mode(false);
         
-  }
+    $locationProvider.html5Mode(false);
+        
+  });
   
 })();

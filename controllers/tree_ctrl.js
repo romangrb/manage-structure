@@ -3,11 +3,11 @@
   'use strict';
   
   angular
-      .module('structureMng.controllers.treeCtrl', [])
-      .controller('TreeCtrl', TreeCtrl);
-      
-  function TreeCtrl(dataService) {
-    console.log('TreeCtrl');
+      .module('structureMng')
+      .controller('ListCtrl', ['dataService', 'RecursionHelper', 
+          
+  function (dataService, RecursionHelper) {
+
       this.tittle = 'Organization tree';
       
       /*this.treeFamily = {
@@ -36,6 +36,6 @@
           }]
       };*/
     
-  }
+  }]);
     
 })();

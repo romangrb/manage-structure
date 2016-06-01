@@ -3,8 +3,8 @@
   'use strict';
   
   angular
-      .module('structureMng.controllers.EditCtrl', [])
-      .controller('EditCtrl', EditCtrl);
+      .module('structureMng')
+      .controller('EditCtrl', ['$location', '$window', 'dataService',
       
   function EditCtrl($scope, $location, $window, dataService) {
     
@@ -76,6 +76,7 @@
                   status;
     };
     
-  }
-    
+  }]);
+          
 })();
+    
