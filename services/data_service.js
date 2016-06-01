@@ -16,7 +16,7 @@
           this.__isConfig = false;
       },
       
-      getCompanies : function(){
+      getCompanies : function(callback){
           
           var self = this,
           
@@ -24,6 +24,7 @@
             
             self.__tmp_collection = self.__copyArray(collection);
             
+            if (callback) return callback(collection);
           };
           
           return CompaniesFactory.query(successCb);
@@ -143,7 +144,22 @@
          
         CompanyFactory.show(q, cb);
         
-      }
+      },
+      
+      makeTree : function(q, callback){
+        
+        var self = this,
+          
+          cb = function (data){ 
+            
+            self.__tmp_collection = [];
+            return callback(data);
+            
+          };
+        
+        self.__getDescendants(q, cb);
+        
+      },
       
       
     };
@@ -152,7 +168,7 @@
       
         var self = this;
         
-        this.__tmp_collection = '';
+        this.__tmp_collection = [];
         
         this.__tmp_oldParent = '';
         
@@ -168,7 +184,7 @@
           
           var collection = self.__tmp_collection;
           
-          if (collection == null || collection.length<1) return '';
+          if (collection.length<1) return '';
           
           var thisCompany = collection.find(function(item) {
             return item._id.$oid == q.id;
@@ -186,7 +202,7 @@
           
           function getDescendants(company){
             
-              if (!company || company.child_ids==null || company.child_ids.length<0) return;
+              if (!company || company.child_ids==null || company.child_ids.length<1) return;
                   
               var companies = company.child_ids;  
                   
@@ -373,7 +389,7 @@
             ln = arr.length,
             children = [];
         
-          if (collection == null || ln<1) return [];
+          if (ln<1) return [];
           
             for (var i = 0; arr.length>i; i++ ){
                 
@@ -504,7 +520,130 @@
               
         };
         
+        this.__getDescendants = function(q, callback){
+          
+          var self = this,
+              status = {
+                type:0, 
+                obj:[], 
+                message:'done',
+              };
+          
+          (self.__tmp_collection.length<1)?
+                                         self.getCompanies(successCb, errorCb):
+                                         successCb(self.__tmp_collection);
+          function errorCb(err){
+             return callback(status.obj.push(err));
+          }
+                                                
+          function successCb(collection){
+              
+              var thisCompany = collection.find(function(item) {
+                return item._id.$oid == q.id;
+              });
+          
+              var descendants = [],
+                tmp_descendants = [],
+                new_tmp_descendants = [];
+                
+              descendants.push(thisCompany);
+               
+              getDescendants(thisCompany);
+              
+              return callback(descendants);
+              
+              function getDescendants(company){
+                
+                  if (!company || company.child_ids==null || company.child_ids.length<1) return;
+                      
+                  var companies = company.child_ids;
+                   company.children = [];
+                   
+                  collection.forEach(function(item, j, arr) {
+                     
+                      companies.forEach(function(targChild, i, targArr) {
+                          if (targChild == item._id.$oid) {
+                            company.children.push(item);
+                            tmp_descendants.push(item);
+                          }
+                      });
+                      
+                  });
+                  
+                  if (tmp_descendants.length>0){
+                      
+                      new_tmp_descendants = self.__copyArray(tmp_descendants);
+                      
+                      tmp_descendants = [];
+                      
+                      new_tmp_descendants.forEach(function(new_item) {
+                        
+                          getDescendants(new_item); 
+                          
+                      });
+                  }
+                      
+              }
+              
+          }
+
+        };
+        
+        this.__getEstimatedEarning = function(data, callback){
+          
+          var self = this,
+              status = {
+                type:0, 
+                obj:[], 
+                message:'done',
+              };
+          
+          if (data.status) return callback(status);
   
+          var descendants = [],
+            tmp_descendants = [],
+            new_tmp_descendants = [];
+            
+          
+          /*return callback(descendants);
+          
+          function getDescendants(company){
+            
+              if (!company || company.child_ids==null || company.child_ids.length<1) return;
+                  
+              var companies = company.child_ids;
+               company.children = [];
+               
+              collection.forEach(function(item, j, arr) {
+                 
+                  companies.forEach(function(targChild, i, targArr) {
+                      if (targChild == item._id.$oid) {
+                        company.children.push(item);
+                        tmp_descendants.push(item);
+                      }
+                  });
+                  
+              });
+              
+              if (tmp_descendants.length>0){
+                  
+                  new_tmp_descendants = self.__copyArray(tmp_descendants);
+                  
+                  tmp_descendants = [];
+                  
+                  new_tmp_descendants.forEach(function(new_item) {
+                    
+                      getDescendants(new_item); 
+                      
+                  });
+              }
+                  
+          }*/
+              
+          
+
+        };
+        
     }
       
      PrivProtMeth.prototype = Company;

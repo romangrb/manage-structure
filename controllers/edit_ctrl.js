@@ -9,7 +9,7 @@
   function EditCtrl($scope, $location, $window, dataService) {
     
     var self = this;
-    console.log('EditCtrl');
+
     this.editTittle = 'Edit company';
     this.removeTittle = 'Remove company';
     this.unlinkTittle = 'Unlink company';

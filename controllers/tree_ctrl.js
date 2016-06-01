@@ -4,12 +4,20 @@
   
   angular
       .module('structureMng')
-      .controller('TreeCtrl', ['$scope' ,'dataService', 
+      .controller('TreeCtrl', ['$scope', '$location', 'dataService', 
           
-  function ($scope, dataService) {
+  function ($scope, $location, dataService) {
 
       this.tittle = 'Organization tree';
       
+      this.query = $location.search() || '';
+      
+      var callback = function(data){
+        if (!data.status) console.log(data);
+      };
+      
+      (this.query)? dataService.makeTree(this.query, callback): {};
+                    
       this.treeFamily = {
           name : "Parent",
           children: [{
