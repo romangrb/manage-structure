@@ -4,37 +4,31 @@
   
   angular
       .module('structureMng')
-      .controller('ListCtrl', ['dataService', 'RecursionHelper', 
+      .controller('TreeCtrl', ['$scope' ,'dataService', 
           
-  function (dataService, RecursionHelper) {
+  function ($scope, dataService) {
 
       this.tittle = 'Organization tree';
       
-      /*this.treeFamily = {
-          name : "ent",
-          children_ids: [{
+      this.treeFamily = {
+          name : "Parent",
+          children: [{
               name : "Child1",
-              earn : 28,
-              total:'59',
-              children_ids: [{
+              children: [{
                   name : "Grandchild1",
-                  children_ids: []
+                  children: []
               },{
                   name : "Grandchild2",
-                  earn : 28,
-                  children_ids: [{
-                      name : "Grandchild211",
-                      children_ids: []
-                  }]
+                  children: []
               },{
                   name : "Grandchild3",
-                  children_ids: []
+                  children: []
               }]
           }, {
               name: "Child2",
-              children_ids: []
+              children: []
           }]
-      };*/
+        };
     
   }]);
     

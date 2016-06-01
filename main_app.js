@@ -30,7 +30,8 @@
             controlleAs : 'EditVm'
         })
         .when('/tree', {
-            controlleAs: 'views/tree.html'
+            templateUrl: 'views/tree.html',
+            controlleAs : 'treeVm'
         })
         .otherwise({
             redirectTo: '/'

@@ -4,7 +4,7 @@
   
   angular
       .module('structureMng')
-      .controller('EditCtrl', ['$location', '$window', 'dataService',
+      .controller('EditCtrl', ['$scope', '$location', '$window', 'dataService',
       
   function EditCtrl($scope, $location, $window, dataService) {
     
