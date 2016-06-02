@@ -13,7 +13,7 @@ b. Clone and quick bind
 
   2. Clone project :
  
-     https://github.com/romangrb/manage-structure.git
+     git clone https://github.com/romangrb/manage-structure.git
 
 
   3. Install component by bower :
