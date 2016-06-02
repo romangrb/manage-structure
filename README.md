@@ -13,6 +13,8 @@ b. Clone and quick bind
 
   2. Clone project :
  
+     git init
+       
      git clone https://github.com/romangrb/manage-structure.git
 
 
