@@ -22,7 +22,6 @@
       <tr>
         <th class="text-center">name</th>
         <th class="text-center">estimated earning</th>
-        <th class="text-center">total estimated earning</th>
         <th class="text-center">
           <a href="#/new"><i class="glyphicon glyphicon-plus"></i></a>
         </th>
@@ -35,7 +34,6 @@
       <tr ng-repeat="company in listVm.companies | filter:search | orderBy:'name'">
         <td class="text-center">{{company.name}}</td>
         <td class="text-center">{{company.income}}</td>
-        <td class="text-center">{{company.total}}</td>
         <td class="text-center">
           <td class="text-center">
             <a href="#/tree/?id={{company._id.$oid}}"><i class="glyphicon glyphicon-link"></i></a>
@@ -53,5 +51,4 @@
       </tr>
     </tbody>
   </table>
-
 </section>
