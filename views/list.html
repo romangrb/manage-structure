@@ -21,33 +21,30 @@
     <thead>
       <tr>
         <th class="text-center">name</th>
-        <th class="text-center">estimated earning</th>
-        <th class="text-center">
+        <th class="text-center" colspan="0">estimated earning</th>
+        <th class="text-center" colspan="5">
           <a href="#/new"><i class="glyphicon glyphicon-plus"></i></a>
         </th>
-        <th class="text-center"></th>
-        <th class="text-center"></th>
-        <th class="text-center"></th>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="company in listVm.companies | filter:search | orderBy:'name'">
         <td class="text-center">{{company.name}}</td>
         <td class="text-center">{{company.income}}</td>
+        
         <td class="text-center">
-          <td class="text-center">
-            <a href="#/tree/?id={{company._id.$oid}}"><i class="glyphicon glyphicon-link"></i></a>
-          </td>
-          <td class="text-center">
-            <a href="#/edit/?id={{company._id.$oid}}"><i class="glyphicon glyphicon-pencil"></i></a>
-          </td>
-          <td class="text-center">
-            <a href="#/unlink/?id={{company._id.$oid}}"><i class="glyphicon glyphicon-scissors"></i></a>
-          </td>
-          <td class="text-center">
-            <a href="#/remove/?id={{company._id.$oid}}"><i class="glyphicon glyphicon-trash"></i></a>
-          </td>
+          <a href="#/tree/?id={{company._id.$oid}}"><i class="glyphicon glyphicon-link"></i></a>
         </td>
+        <td class="text-center">
+          <a href="#/edit/?id={{company._id.$oid}}"><i class="glyphicon glyphicon-pencil"></i></a>
+        </td>
+        <td class="text-center">
+          <a href="#/unlink/?id={{company._id.$oid}}"><i class="glyphicon glyphicon-scissors"></i></a>
+        </td>
+        <td class="text-center">
+          <a href="#/remove/?id={{company._id.$oid}}"><i class="glyphicon glyphicon-trash"></i></a>
+        </td>
+       
       </tr>
     </tbody>
   </table>
