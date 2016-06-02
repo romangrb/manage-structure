@@ -34,7 +34,11 @@
         
       };
       
-      (this.query)? dataService.makeTree(this.query, callback): {};
+      (this.query)? 
+                   dataService.makeTree(this.query, callback):
+                   this.respond = "Cannot create tree for structure," 
+          +"please show this message to youre administrator : ERROR"
+          +"cannot recive target ID, id :"+this.query;
                     
     
   }]);
