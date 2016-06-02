@@ -6,7 +6,7 @@
       .module('structureMng', ['ngRoute', 'ngResource'])
       .config(
   
-  function($routeProvider, $locationProvider) {
+  function($routeProvider) {
     
     $routeProvider
         .when('/', {
@@ -37,7 +37,6 @@
             redirectTo: '/'
         });
         
-    $locationProvider.html5Mode(false);
         
   });
   
