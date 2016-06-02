@@ -16,3 +16,9 @@ select.custom {
 select.custom::-ms-expand {
   display: none;
 }
+
+.cont-small {
+  width: 70%;
+  margin:0;
+  padding:0;
+}
