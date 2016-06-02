@@ -153,14 +153,13 @@
           cb = function (data){ 
             
             self.__tmp_collection = [];
-            return callback(data);
+            return callback(data[0]);
             
           };
         
         self.__getDescendants(q, cb);
         
       },
-      
       
     };
        
