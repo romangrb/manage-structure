@@ -4,9 +4,9 @@
   
   angular
       .module('structureMng')
-      .controller('TreeCtrl', ['$scope', '$location', 'dataService', 
+      .controller('TreeCtrl', ['$location', 'dataService', 'constant',
           
-  function ($scope, $location, dataService) {
+  function ($location, dataService, c) {
       
       var self = this;
       
@@ -26,9 +26,7 @@
           
         } else {
           
-          self.respond = "Cannot create tree for structure," 
-          +"please show this message to youre administrator : ERROR"
-          +data.status;
+          self.respond = c.ERR_SHOW_TREE + data.status;
           
         }
         
@@ -36,9 +34,7 @@
       
       (this.query)? 
                    dataService.makeTree(this.query, callback):
-                   this.respond = "Cannot create tree for structure," 
-          +"please show this message to youre administrator : ERROR"
-          +"cannot recive target ID, id :"+this.query;
+                   this.respond = c.ERR_ID_ISSUE + this.query;
                     
     
   }]);

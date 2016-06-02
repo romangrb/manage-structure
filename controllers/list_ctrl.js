@@ -4,11 +4,11 @@
   
   angular
       .module('structureMng')
-      .controller('ListCtrl', ['$scope', 'dataService',
+      .controller('ListCtrl', ['dataService', 'constant',
            
-  function ($scope, dataService) {
+  function (dataService, c) {
             
-      this.tittle = 'All companies';
+      this.tittle = c.H_LIST;
       
       this.companies = dataService.getCompanies();
         

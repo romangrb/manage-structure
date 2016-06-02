@@ -4,15 +4,15 @@
   
   angular
       .module('structureMng')
-      .controller('EditCtrl', ['$scope', '$location', '$window', 'dataService',
+      .controller('EditCtrl', ['$location', '$window', 'dataService', 'constant',
       
-  function EditCtrl($scope, $location, $window, dataService) {
-    
+  function EditCtrl($location, $window, dataService, c) {
+ 
     var self = this;
 
-    this.editTittle = 'Edit company';
-    this.removeTittle = 'Remove company';
-    this.unlinkTittle = 'Unlink company';
+    this.editTittle = c.H_EDIT;
+    this.removeTittle = c.H_REMOVE;
+    this.unlinkTittle = c.H_UNLINK;
     this.responceStatus = '';
     this.query = $location.search() || '';
     
@@ -28,7 +28,7 @@
       var status = {
         type:0, 
         obj:{
-          message:"Company indentification issue \n plese try again"}
+          message:c.ERR_ID_ISSUE}
       },
         callback = function (status){ 
           console.log(status);

@@ -4,13 +4,13 @@
   
   angular
       .module('structureMng')
-      .controller('CreateCtrl', ['dataService', '$window', 
+      .controller('CreateCtrl', ['dataService', '$window', 'constant',
           
-  function(dataService, $window) {
+  function(dataService, $window, c) {
     
     var self = this;
     
-    this.tittle = 'New organization';
+    this.tittle = c.H_CREATE;
     
     this.responceStatus = '';
     
@@ -21,10 +21,10 @@
       var status = {
         type:0, 
         obj:{
-          message:"Company indentification issue \n plese try again"}
+          message:c.ERR_ID_ISSUE
+        }
       },
         callback = function (status){ 
-          console.log(status);
           $window.location.href= "#/";    
       };
          
