@@ -149,15 +149,21 @@
       makeTree : function(q, callback){
         
         var self = this,
-          
+        
           cb = function (data){ 
             
-            self.__tmp_collection = [];
             return callback(data[0]);
+            
+          },
+          
+          middleCb = function (data){ 
+            
+            self.__tmp_collection = [];
+            self.__getEstimatedEarning(data, cb);
             
           };
         
-        self.__getDescendants(q, cb);
+        self.__getDescendants(q, middleCb);
         
       },
       
@@ -319,7 +325,7 @@
               childs.push(companyId);
               newParent.child_ids = childs;
               changedColl.push(newParent);
-              // {id:newParentId}, newParent
+              
             } 
             
             if (oldParent){
@@ -347,7 +353,6 @@
               successCb = function(cb) {
                   
                   if (i<ln) {
-                    //console.log(i, collection[i]);
                     chain(i, collection);
                     ++i;
                     status.type = 1;
@@ -565,6 +570,8 @@
                             company.children.push(item);
                             tmp_descendants.push(item);
                           }
+                          
+                          
                       });
                       
                   });
@@ -595,52 +602,58 @@
                 type:0, 
                 obj:[], 
                 message:'done',
-              };
+              },
+              collection = [];
           
           if (data.status) return callback(status);
-  
-          var descendants = [],
-            tmp_descendants = [],
-            new_tmp_descendants = [];
-            
           
-          /*return callback(descendants);
-          
-          function getDescendants(company){
-            
-              if (!company || company.child_ids==null || company.child_ids.length<1) return;
-                  
-              var companies = company.child_ids;
-               company.children = [];
-               
-              collection.forEach(function(item, j, arr) {
-                 
-                  companies.forEach(function(targChild, i, targArr) {
-                      if (targChild == item._id.$oid) {
-                        company.children.push(item);
-                        tmp_descendants.push(item);
-                      }
-                  });
-                  
-              });
+          makeCollection(data);
               
-              if (tmp_descendants.length>0){
+          collection.reverse();
+           
+          makeAggrInc(collection, collection);
+          
+          return callback(data);
+          
+          function makeCollection(company){
+             
+            company.forEach(function(item, j, arr) {
+              var children = item.children;
+                collection.push(item);
+              if (children) makeCollection(children);
+            });
+                
+          }
+          
+          function makeAggrInc(src, targ){
+              
+              var arr = targ,
+                ln = src.length;
+              
+              for (var i = 0; arr.length>i; i++ ){
+                
+                for (var j = 0; ln>j; j++ ){
                   
-                  new_tmp_descendants = self.__copyArray(tmp_descendants);
-                  
-                  tmp_descendants = [];
-                  
-                  new_tmp_descendants.forEach(function(new_item) {
+                  if (arr[i].parent_id === src[j]._id.$oid){
                     
-                      getDescendants(new_item); 
-                      
-                  });
-              }
+                    arr[i].income = arr[i].income || 0;
+                    arr[i].total  = arr[i].total || 0;
+                    arr[i].total += arr[i].income;
+                    
+                    src[j].income = src[j].income || 0;
+                    src[j].total = src[j].total || 0;
+                    
+                    src[j].total += arr[i].total;
+                    
+                  }
                   
-          }*/
+                }
+                
+              }
               
-          
-
+              return src;
+          }
+        
         };
         
     }
