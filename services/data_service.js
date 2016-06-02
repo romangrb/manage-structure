@@ -645,6 +645,7 @@
                     
                     src[j].total += arr[i].total;
                     
+                    break;
                   }
                   
                 }

@@ -2,7 +2,7 @@
 
 a. You can run project by :
 
-  http://romangrb.github.io/manage-structure
+     http://romangrb.github.io/manage-structure
 
 b. Clone and quick bind
 
@@ -10,8 +10,14 @@ b. Clone and quick bind
     
      http://bower.io
   
-  2. Install component by bower :
+
+  2. Clone project :
+ 
+     https://github.com/romangrb/manage-structure.git
+
+
+  3. Install component by bower :
      
      bower i
 
-  3. Run index.html
+  4. Run index.html
