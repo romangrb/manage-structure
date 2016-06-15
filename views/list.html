@@ -1,26 +1,26 @@
 <section ng-controller="ListCtrl as listVm">
   
   <h4 class="text-center">{{listVm.tittle}}</h4>
-  
-  <table class="container text-center table table-bordered">
-    <thead>
-        <tr>
-          <th class="text-center">
-            <a><i class="glyphicon glyphicon-search"></i></a>
-          </th>
-          <th>
-            <input type="text" 
-               class="form-control search-query" 
-               ng-model="search" 
-               placeholder="name...">
-          </th>
-        </tr>
-      </thead>
-  </table>
-  <table class="container text-center table table-bordered">
+ 
+  <table class="container text-center table table-responsive">
     <thead>
       <tr>
-        <th class="text-center">name</th>
+        <th class="text-center form-inline">
+          <div id="custom-search-input">
+            <div class="input-group">
+              <input type="text" 
+                     class="form-control input-sm search-query"
+                     ng-model="search" 
+                     placeholder="name..."
+              />
+              <span class="input-group-btn">
+                  <a class="btn btn-default btn-sm">
+                      <i class="glyphicon glyphicon-search"></i>
+                  </a>
+              </span>
+            </div>
+          </div>
+        </th>
         <th class="text-center" colspan="0">estimated earning</th>
         <th class="text-center" colspan="5">
           <a href="#/new"><i class="glyphicon glyphicon-plus"></i></a>

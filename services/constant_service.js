@@ -6,7 +6,7 @@
       .module('structureMng')
       .constant('constant', {
      
-    H_CREATE : 'New organization',
+    H_CREATE : 'New company',
     H_EDIT   : 'Edit company',
     H_REMOVE : 'Remove company',
     H_UNLINK : 'Unlink company',
