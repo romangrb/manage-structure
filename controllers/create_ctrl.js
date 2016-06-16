@@ -12,25 +12,44 @@
     
     this.tittle = c.H_CREATE;
     
-    this.responceStatus = '';
+    this.potentialParents = "";
     
-    this.potentialParents = dataService.getCompanyPotentialParents(null, true) || '';
+    this.messageToClient = "";
+    
+    this.errTittle = c.MSG_ERR_USER;
+    
+    dataService.getCompanyPotentialParents(null, true, companyPotentialParentsCallback);
     
     this.save = function(newCollection){
-      
-      var status = {
-        type:0, 
-        obj:{
-          message:c.ERR_ID_ISSUE
-        }
-      },
-        callback = function (status){ 
-          $window.location.href= "#/";    
-      };
          
-      dataService.createCompany(newCollection, callback);
+      dataService.createCompany(newCollection, createCompanyCallback);
             
     };
+    
+    function companyPotentialParentsCallback (status, collection){
+     
+      (!!status.type) ? 
+          self.potentialParents = collection : 
+          self.messageToClient = c.MSG_CLIENT_CODE + 
+                                 status.code+
+                                 c.MSG_CLIENT_MSG+
+                                 status.message+
+                                 c.MSG_CLIENT_STACK_ERROR+
+                                 status.obj.join();
+    }
+    
+    function createCompanyCallback (status, collection){
+     
+      (!!status.type) ? 
+          $window.location.href= "#/" : 
+          self.messageToClient = c.MSG_CLIENT_CODE + 
+                                 status.code+
+                                 c.MSG_CLIENT_MSG+
+                                 status.message+
+                                 c.MSG_CLIENT_STACK_ERROR+
+                                 status.obj.join();
+    }
+    
   
   }]);
           

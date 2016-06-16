@@ -1,8 +1,23 @@
 <section ng-controller="CreateCtrl as createVm" class="container">
  
   <h4 class="text-center">{{createVm.tittle}}</h4>
+  
+  <div ng-if="createVm.messageToClient" class="container">
+    <div class="col-xs-12 text-left">
+      <a href="#/" class="btn">Back</a>
+    </div>
+    <div class="form-group">
+      <label for="comment">{{createVm.errTittle}}</label>
+      <textarea class="form-control" 
+                rows="7"
+                readonly="true"
+      >
+        {{createVm.messageToClient}}
+      </textarea>
+    </div>
+  </div>
    
-  <form class="form-horizontal" role="form">
+  <form ng-if="!createVm.messageToClient" class="form-horizontal" role="form">
     
     <div class="form-group" ng-class="{error: createVm.company.name.$invalid}">
       <label for="name" class="control-label col-xs-6">Name</label>

@@ -22,7 +22,7 @@
       
       function callback (status, collection){
         
-        (!!status) ? 
+        (!!status.type) ? 
             self.companies = collection : 
             self.messageToClient = c.MSG_CLIENT_CODE + 
                                    status.code+

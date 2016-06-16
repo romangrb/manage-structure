@@ -11,11 +11,13 @@
     DB_COLLECTION_NAME : "organizations",
     DB_ID_Q: "/:id",
     DB_ID_PARAM :"@id",
+    
     H_CREATE : "New company",
     H_EDIT   : "Edit company",
     H_REMOVE : "Remove company",
     H_UNLINK : "Unlink company",
     H_LIST   : "All companies",
+    
     MSG_CLIENT_CODE : "\n status code : ",
     MSG_CLIENT_MSG  : "\n message : ",
     MSG_CLIENT_STACK_ERROR: "\n error : ",
@@ -37,7 +39,8 @@
     MSG_TEXT_DB_DELETE_ERROR     : "collection don't deleted \n",
     MSG_ERR_USER                 : "unfortunately error has happened, \n please show this message to your administrator \n",
     
-    ERR_ID_ISSUE  : "Company indentification issue \n plese show this message to your administrator",
+    MSG_ERR_TMP_GENERATE    : "problem with generate temporary collection",
+    ERR_ID_ISSUE  : "problem with receive collection ID",
     ERR_SHOW_TREE : "Cannot create tree for structure, please show this message to youre administrator : ERROR",
      
     });

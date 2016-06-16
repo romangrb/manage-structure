@@ -65,33 +65,75 @@
           
       },
       
-      getCompanyPotentialParents : function(q, isNew){
-         
-          return (!isNew)? this.__searchPotentialParents(q) : this.getCompanies();
+      getCompanyPotentialParents : function(q, isNew, callback){
           
+          var self = this,
+            status = {
+              type:0,
+              code:"",
+              message:"",
+              obj:[],
+            },
+          
+          successCb = function(collection){
+            
+            status.type = 1;
+            status.code = c.MSG_STATUS_DB_GET_SUCCESS;
+            status.message =  c.MSG_TEXT_DB_GET_SUCCESS ;
+            
+            return callback(status, collection);
+            
+          },
+          
+          errorCb = function(err){
+            
+            status.type = 0;
+            status.code = c.MSG_STATUS_DB_GET_ERROR;
+            status.message =  c.MSG_TEXT_DB_GET_ERROR;
+            status.obj.push(err);
+            
+            return callback(status);
+             
+          };
+          
+          //return CompaniesFactory.query(successCb, errorCb);
+          //return (!isNew)? callback(this.__searchPotentialParents(q)) : callback(this.getCompanies());
+          (!isNew)? this.__searchPotentialParents(q, successCb, errorCb) : this.getCompanies(callback);
       },
       
       createCompany : function(collection, callback){
           
+          
           var self = this,
             status = {
-              type:0, 
+              type:0,
+              code:"",
               message:"",
               obj:[],
             },
+          
+          successCb = function(cb){
             
-            successCb = function(cb) {
-                
-                if (cb.parent_id) self.__changeParents(cb, successCb);
-                
-                status.type = 1;
-                return callback(status);
-                
-            }, 
-            errorCb = function(err) {
-                status.obj = err;
-                return callback(status);
-            };
+            if (cb.parent_id) self.__changeParents(cb, successCb);
+            
+            status.type = 1;
+            status.code = c.MSG_STATUS_DB_CREATE_SUCCESS;
+            status.message =  c.MSG_TEXT_DB_CREATE_SUCCESS ;
+            
+            return callback(status, collection);
+            
+          },
+          
+          errorCb = function(err){
+            
+            status.type = 0;
+            status.code = c.MSG_STATUS_DB_CREATE_ERROR;
+            status.message =  c.MSG_TEXT_DB_CREATE_ERROR;
+            status.obj.push(err);
+            
+            return callback(status);
+            
+          };
             
         CompaniesFactory.create(collection, successCb, errorCb);
           
@@ -205,11 +247,13 @@
           
         };
         
-        this.__searchPotentialParents = function(q){
+        this.__searchPotentialParents = function(q, successCb, errorCb){
           
           var collection = self.__tmp_collection;
           
-          if (collection.length<1) return '';
+          if (collection.length<1) return errorCb(c.MSG_ERR_TMP_GENERATE);
+          
+          if (!q) return errorCb(c.ERR_ID_ISSUE);
           
           var thisCompany = collection.find(function(item) {
             return item._id.$oid == q.id;
@@ -218,12 +262,12 @@
           var descendants = [],
             tmp_descendants = [],
             new_tmp_descendants = [];
+          console.log(thisCompany);
+          // descendants.push(thisCompany);
             
-          descendants.push(thisCompany);
-            
-          getDescendants(thisCompany);
+          // getDescendants(thisCompany);
           
-          return getPotentialParents(collection, descendants);
+          //return getPotentialParents(collection, descendants);
           
           function getDescendants(company){
             
