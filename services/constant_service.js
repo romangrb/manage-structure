@@ -42,6 +42,10 @@
     MSG_ERR_TMP_GENERATE    : "problem with generate temporary collection",
     ERR_ID_ISSUE            : "problem with receive collection ID",
     ERR_ID_COLL_ISSUE       : "problem with receive self collection from ID",
+    
+    ERR_FIND_DESCENDANT     : "problem with find target descendants",
+    ERR_PFIND_PARENT        : "problem with find target parent",
+    
     ERR_SHOW_TREE           : "Cannot create tree for structure, please show this message to youre administrator : ERROR",
      
     });

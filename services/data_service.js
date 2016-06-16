@@ -321,10 +321,19 @@
               return errorCb(c.MSG_ERR_TMP_GENERATE);
           }
           
-          this.__getCompanyDescendants(thisCompany, collection);
+          try {
+            this.__getCompanyDescendants(thisCompany, collection);
+          }catch (err){
+            return errorCb([c.ERR_FIND_DESCENDANT, err]);
+          }
           
-          return successCb(self.__getPotentialParents(collection, descendants));
+          try {
+            var finalColl = self.__getPotentialParents(collection, descendants);
+          }catch (err){
+            return errorCb([c.ERR_PFIND_PARENT, err]);
+          }
           
+          return successCb(finalColl);
           
       };
       
