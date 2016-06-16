@@ -54,14 +54,42 @@
          
       },
       
-      getCompany : function(q){
-          
+      getCompany : function(q, callback){
+                          
           var self = this,
-            cb = function (collection){
-              self.__tmp_oldParent = collection.parent_id || '';
-            };
+            status = {
+              type:0,
+              code:"",
+              message:"",
+              obj:[],
+            },
           
-          return CompanyFactory.show(q, cb);
+          successCb = function(collection){
+            
+            self.__tmp_oldParent = collection.parent_id || '';
+            
+            status.type = 1;
+            status.code = c.MSG_STATUS_DB_GET_SUCCESS;
+            status.message =  c.MSG_TEXT_DB_GET_SUCCESS ;
+            
+            return callback(status, collection);
+            
+          },
+          
+          errorCb = function(err){
+            
+            status.type = 0;
+            status.code = c.MSG_STATUS_DB_GET_ERROR;
+            status.message =  c.MSG_TEXT_DB_GET_ERROR;
+            status.obj.push(err);
+            
+            return callback(status);
+             
+          };  
+          
+          if (q==null) return errorCb(c.ERR_ID_ISSUE);
+          
+          CompanyFactory.show(q, successCb, errorCb);
           
       },
       
@@ -102,7 +130,6 @@
       
       createCompany : function(collection, callback){
           
-          
           var self = this,
             status = {
               type:0,
@@ -113,7 +140,7 @@
           
           successCb = function(cb){
             
-            if (cb.parent_id) self.__changeParents(cb, successCb);
+            if (cb.parent_id) self.__changeParents(cb, successCb, errorCb);
             
             status.type = 1;
             status.code = c.MSG_STATUS_DB_CREATE_SUCCESS;
@@ -142,18 +169,36 @@
           
           var self = this,
             status = {
-              type:0, 
-              obj:"",
+              type:0,
+              code:"",
+              message:"",
+              obj:[],
             },
+          
+          successCb = function(cb){
             
-            successCb = function(cb) {
-                status.type = 1;
-                return callback(status);
-            }, 
-            errorCb = function(err) {
-                status.obj = err;
-                return callback(status);
-            };
+            if (cb.parent_id) self.__changeParents(cb, successCb);
+            
+            status.type = 1;
+            status.code = c.MSG_STATUS_DB_UPDATE_SUCCESS;
+            status.message =  c.MSG_TEXT_DB_UPDATE_SUCCESS ;
+            
+            return callback(status, collection);
+            
+          },
+          
+          errorCb = function(err){
+            
+            status.type = 0;
+            status.code = c.MSG_STATUS_DB_UPDATE_ERROR;
+            status.message =  c.MSG_TEXT_DB_UPDATE_ERROR;
+            status.obj.push(err);
+            
+            return callback(status);
+            
+          };
+        
+        if (q==null) return errorCb(c.ERR_ID_ISSUE);
             
         CompanyFactory.update(q, collection, successCb, errorCb);
           
@@ -162,19 +207,46 @@
       setCompanyChanges : function(q, collection, callback){
           
           var self = this,
-            
-            middleCb = function (status){ 
-              return callback(status, 'setCompanyChanges');
+            status = {
+              type:0,
+              code:"",
+              message:"",
+              obj:[],
             },
+          
+          successCb = function(cb){
             
-            cb = function (status){ 
+            status.type = 1;
+            status.code = c.MSG_STATUS_DB_UPDATE_SUCCESS;
+            status.message =  c.MSG_TEXT_DB_UPDATE_SUCCESS ;
+            
+            return callback(status, collection);
+            
+          },
+          
+          middleCb = function (status){ 
               
               return (!!status.type) ? 
-                              self.updateCompany(q, collection, middleCb): 
+                              self.updateCompany(q, collection, successCb): 
                               status;
-            };
+          },
+          !!!!!!!!!!!!!!!!!!!
+          errorCb = function(err){
+            
+            status.type = 0;
+            status.code = c.MSG_STATUS_DB_UPDATE_ERROR;
+            status.message =  c.MSG_TEXT_DB_UPDATE_ERROR;
+            status.obj.push(err);
+            
+            return callback(status);
+            
+          };
+        
+        if (q==null) return errorCb(c.ERR_ID_ISSUE);
+        
           
-          this.__changeParents(collection, cb);
+        this.__changeParents(collection, middleCb);  
+        
           
       },
       
