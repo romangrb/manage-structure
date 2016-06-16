@@ -1,7 +1,19 @@
 <section ng-controller="ListCtrl as listVm">
   
   <h4 class="text-center">{{listVm.tittle}}</h4>
- 
+  
+  <div ng-if="listVm.messageToClient" class="container">
+    <div class="form-group">
+      <label for="comment">{{listVm.errTittle}}</label>
+      <textarea class="form-control" 
+                rows="7"
+                readonly="true"
+      >
+        {{listVm.messageToClient}}
+      </textarea>
+    </div>
+  </div>
+  
   <table class="container text-center table table-responsive">
     <thead>
       <tr>
@@ -27,6 +39,7 @@
         </th>
       </tr>
     </thead>
+    
     <tbody>
       <tr ng-repeat="company in listVm.companies | filter:search | orderBy:'name'">
         <td class="text-center">{{company.name}}</td>

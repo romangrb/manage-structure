@@ -6,9 +6,10 @@
       .module('structureMng')
       .service('dataService', [
             'CompaniesFactory', 
-            'CompanyFactory', 
+            'CompanyFactory',
+            'constant',
             
-  function (CompaniesFactory, CompanyFactory){
+  function (CompaniesFactory, CompanyFactory, c){
    
     var Company = {
       
@@ -20,7 +21,8 @@
           
           var self = this,
             status = {
-              type:0, 
+              type:0,
+              code:"",
               message:"",
               obj:[],
             },
@@ -28,11 +30,27 @@
           successCb = function(collection){
             
             self.__tmp_collection = self.__copyArray(collection);
-            console.log(callback);
-            if (callback) return callback(collection);
+            
+            status.type = 1;
+            status.code = c.MSG_STATUS_DB_GET_SUCCESS;
+            status.message =  c.MSG_TEXT_DB_GET_SUCCESS ;
+            
+            return callback(status, collection);
+            
+          },
+          
+          errorCb = function(err){
+            
+            status.type = 0;
+            status.code = c.MSG_STATUS_DB_GET_ERROR;
+            status.message =  c.MSG_TEXT_DB_GET_ERROR;
+            status.obj.push(err);
+            
+            return callback(status);
+             
           };
           
-          return CompaniesFactory.query(successCb);
+          return CompaniesFactory.query(successCb, errorCb);
          
       },
       
