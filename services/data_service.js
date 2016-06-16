@@ -10,8 +10,8 @@
             
   function (CompaniesFactory, CompanyFactory){
    
-    var Company = {  
-        
+    var Company = {
+      
       constructor : function fn(){
           this.__isConfig = false;
       },
@@ -19,11 +19,16 @@
       getCompanies : function(callback){
           
           var self = this,
+            status = {
+              type:0, 
+              message:"",
+              obj:[],
+            },
           
           successCb = function(collection){
             
             self.__tmp_collection = self.__copyArray(collection);
-            
+            console.log(callback);
             if (callback) return callback(collection);
           };
           
@@ -53,8 +58,8 @@
           var self = this,
             status = {
               type:0, 
-              obj:null,
-              message:''
+              message:"",
+              obj:[],
             },
             
             successCb = function(cb) {
@@ -62,7 +67,6 @@
                 if (cb.parent_id) self.__changeParents(cb, successCb);
                 
                 status.type = 1;
-                status.message = 'ok';
                 return callback(status);
                 
             }, 
@@ -80,13 +84,11 @@
           var self = this,
             status = {
               type:0, 
-              obj:null,
-              message:''
+              obj:"",
             },
             
             successCb = function(cb) {
                 status.type = 1;
-                status.message = 'ok';
                 return callback(status);
             }, 
             errorCb = function(err) {
