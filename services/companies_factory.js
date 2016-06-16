@@ -4,17 +4,16 @@
   
   angular
       .module('structureMng')
-      .factory('CompaniesFactory', function ($resource) {
+      .factory('CompaniesFactory', ['$resource', 'constant', function ($resource, c) {
          
-        return $resource('https://api.mongolab.com/api/1/databases' +
-            '/grbdb/collections/organizations',
-            { apiKey: 'umQLTHlfoM-UB68t6YdiiCzRDByzOUQg' }, 
+        return $resource(c.DB_API_URL + c.DB_COLLECTION_NAME,
+            { apiKey: c.DB_API_KEY}, 
             {
               query:  { method: 'GET', isArray: true },
               create: { method: 'POST' }
             }
           );
           
-      });
+      }]);
   
 })();

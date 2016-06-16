@@ -5,12 +5,17 @@
   angular
       .module('structureMng')
       .constant('constant', {
-     
-    H_CREATE : 'New company',
-    H_EDIT   : 'Edit company',
-    H_REMOVE : 'Remove company',
-    H_UNLINK : 'Unlink company',
-    H_LIST : 'All companies',
+    
+    DB_API_URL : "https://api.mongolab.com/api/1/databases/grbdb/collections/",
+    DB_API_KEY : "umQLTHlfoM-UB68t6YdiiCzRDByzOUQg",
+    DB_COLLECTION_NAME : "organizations",
+    DB_ID_Q: ":id",
+    DB_ID_PARAM :"@id",
+    H_CREATE : "New company",
+    H_EDIT   : "Edit company",
+    H_REMOVE : "Remove company",
+    H_UNLINK : "Unlink company",
+    H_LIST   : "All companies",
     MSG_STATUS_DB_GET_SUCCESS    : 200,
     MSG_STATUS_DB_GET_ERROR      : 500,
     MSG_STATUS_DB_CREATE_SUCCESS : 201,
