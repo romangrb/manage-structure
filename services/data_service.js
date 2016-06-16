@@ -96,9 +96,8 @@
              
           };
           
-          //return CompaniesFactory.query(successCb, errorCb);
-          //return (!isNew)? callback(this.__searchPotentialParents(q)) : callback(this.getCompanies());
           (!isNew)? this.__searchPotentialParents(q, successCb, errorCb) : this.getCompanies(callback);
+          
       },
       
       createCompany : function(collection, callback){
@@ -233,7 +232,11 @@
        
     function PrivProtMeth (){
       
-        var self = this;
+        var self = this,
+        
+          descendants = [],
+          tmp_descendants = [],
+          new_tmp_descendants = [];
         
         this.__tmp_collection = [];
         
@@ -247,60 +250,38 @@
           
         };
         
-        this.__searchPotentialParents = function(q, successCb, errorCb){
-          
-          var collection = self.__tmp_collection;
-          
-          if (collection.length<1) return errorCb(c.MSG_ERR_TMP_GENERATE);
-          
-          if (!q) return errorCb(c.ERR_ID_ISSUE);
-          
-          var thisCompany = collection.find(function(item) {
-            return item._id.$oid == q.id;
-          });
-          
-          var descendants = [],
-            tmp_descendants = [],
-            new_tmp_descendants = [];
-          console.log(thisCompany);
-          // descendants.push(thisCompany);
+        this.__getCompanyDescendants = function(company, collection){
             
-          // getDescendants(thisCompany);
-          
-          //return getPotentialParents(collection, descendants);
-          
-          function getDescendants(company){
+          if (!company || company.child_ids==null || company.child_ids.length<1) return;
+              
+          var companies = company.child_ids;  
+              
+          collection.forEach(function(item, j, arr) {
             
-              if (!company || company.child_ids==null || company.child_ids.length<1) return;
-                  
-              var companies = company.child_ids;  
-                  
-              collection.forEach(function(item, j, arr) {
-                
-                  companies.forEach(function(targChild, i, targArr) {
-                      if (targChild == item._id.$oid) tmp_descendants.push(item);
-                  });
-                  
+              companies.forEach(function(targChild, i, targArr) {
+                  if (targChild == item._id.$oid) tmp_descendants.push(item);
               });
               
-              if (tmp_descendants.length>0){
-                
-                  descendants = descendants.concat(tmp_descendants);
-                  
-                  new_tmp_descendants = self.__copyArray(tmp_descendants);
-                  
-                  tmp_descendants = [];
-                  
-                  new_tmp_descendants.forEach(function(new_item) {
-                    
-                      getDescendants(new_item);  
-                  });
-              }
-                  
-          }
+          });
           
-          function getPotentialParents (collection, forbiddenCollection){
-
+          if (tmp_descendants.length>0){
+            
+              descendants = descendants.concat(tmp_descendants);
+              
+              new_tmp_descendants = self.__copyArray(tmp_descendants);
+              
+              tmp_descendants = [];
+              
+              new_tmp_descendants.forEach(function(new_item) {
+                
+                  self.__getCompanyDescendants(new_item, collection);  
+              });
+          }
+                  
+        },
+          
+        this.__getPotentialParents = function(collection, forbiddenCollection){
+              
             var arr = forbiddenCollection,
               ln = collection.length,
               potentialParents = [].concat(collection);
@@ -320,7 +301,30 @@
             
             return potentialParents;
             
+        },
+        
+        this.__searchPotentialParents = function(q, successCb, errorCb){
+          
+          var collection = self.__tmp_collection;
+          
+          if (collection.length<1) return errorCb(c.MSG_ERR_TMP_GENERATE);
+          
+          if (q==null) return errorCb(c.ERR_ID_ISSUE);
+          
+          var thisCompany = collection.find(function(item) {
+            return item._id.$oid == q.id;
+          });
+          
+          if (thisCompany) {
+              descendants.push(thisCompany);
+          }else{
+              return errorCb(c.MSG_ERR_TMP_GENERATE);
           }
+          
+          this.__getCompanyDescendants(thisCompany, collection);
+          
+          return successCb(self.__getPotentialParents(collection, descendants));
+          
           
       };
       
@@ -473,7 +477,6 @@
             } 
             
             return children;
-          
           
         };
         

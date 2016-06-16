@@ -11,14 +11,51 @@
     var self = this;
 
     this.editTittle = c.H_EDIT;
+    
     this.removeTittle = c.H_REMOVE;
+    
     this.unlinkTittle = c.H_UNLINK;
-    this.responceStatus = '';
+    
+    this.potentialParents = "";
+    
+    this.messageToClient = "";
+    
+    this.errTittle = c.MSG_ERR_USER;
+    
     this.query = $location.search() || '';
     
-    this.potentialParents = (this.query)? 
-                                        dataService.getCompanyPotentialParents(this.query):
-                                        ''; 
+    dataService.getCompanyPotentialParents(this.query, false, companyPotentialParentsCallback);
+    
+    /*this.save = function(newCollection){
+         
+      dataService.createCompany(newCollection, createCompanyCallback);
+            
+    };*/
+    
+    function companyPotentialParentsCallback (status, collection){
+    console.log(status);
+      (!!status.type) ? 
+          self.potentialParents = collection : 
+          self.messageToClient = c.MSG_CLIENT_CODE + 
+                                 status.code+
+                                 c.MSG_CLIENT_MSG+
+                                 status.message+
+                                 c.MSG_CLIENT_STACK_ERROR+
+                                 status.obj.join();
+    }
+    
+    function createCompanyCallback (status, collection){
+     
+      (!!status.type) ? 
+          $window.location.href= "#/" : 
+          self.messageToClient = c.MSG_CLIENT_CODE + 
+                                 status.code+
+                                 c.MSG_CLIENT_MSG+
+                                 status.message+
+                                 c.MSG_CLIENT_STACK_ERROR+
+                                 status.obj.join();
+    }
+    
     this.company = (this.query)? 
                     dataService.getCompany(this.query):
                     '';

@@ -1,8 +1,23 @@
 <section ng-controller="EditCtrl as editVm">
   
-  <h4 class="text-center">{{editVm.tittle}}</h4>
+  <h4 class="text-center">{{editVm.editTittle}}</h4>
   
-  <form class="form-horizontal" role="form">
+  <div ng-if="editVm.messageToClient" class="container">
+    <div class="col-xs-12 text-left">
+      <a href="#/" class="btn">Back</a>
+    </div>
+    <div class="form-group">
+      <label for="comment">{{editVm.errTittle}}</label>
+      <textarea class="form-control" 
+                rows="7"
+                readonly="true"
+      >
+        {{editVm.messageToClient}}
+      </textarea>
+    </div>
+  </div>
+  
+  <form ng-if="!editVm.messageToClient" class="form-horizontal" role="form">
     
     <div class="form-group" ng-class="{error: editVm.company.name.$invalid}">
       <label for="name" class="control-label col-xs-6">Name</label>

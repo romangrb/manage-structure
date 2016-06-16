@@ -40,8 +40,9 @@
     MSG_ERR_USER                 : "unfortunately error has happened, \n please show this message to your administrator \n",
     
     MSG_ERR_TMP_GENERATE    : "problem with generate temporary collection",
-    ERR_ID_ISSUE  : "problem with receive collection ID",
-    ERR_SHOW_TREE : "Cannot create tree for structure, please show this message to youre administrator : ERROR",
+    ERR_ID_ISSUE            : "problem with receive collection ID",
+    ERR_ID_COLL_ISSUE       : "problem with receive self collection from ID",
+    ERR_SHOW_TREE           : "Cannot create tree for structure, please show this message to youre administrator : ERROR",
      
     });
    
