@@ -32,7 +32,7 @@
     
     this.save = function(newCollection){
          
-        dataService.setCompanyChanges(this.query, newCollection, updateCompanyCallback);
+        dataService.updateCompany(this.query, newCollection, updateCompanyCallback);
         
     };
     
@@ -71,9 +71,6 @@
                                  c.MSG_CLIENT_STACK_ERROR+
                                  status.obj.join();
     }
-    
-                        
-    
     
     this.remove = function(q){
       

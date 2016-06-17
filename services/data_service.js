@@ -177,7 +177,7 @@
           
           successCb = function(cb){
             
-            if (cb.parent_id) self.__changeParents(cb, successCb);
+            if (cb.parent_id) self.__changeParents(cb, successCb, errorCb);
             
             status.type = 1;
             status.code = c.MSG_STATUS_DB_UPDATE_SUCCESS;
@@ -204,7 +204,7 @@
           
       },
       
-      setCompanyChanges : function(q, collection, callback){
+      /*setCompanyChanges : function(q, collection, callback){
           
           var self = this,
             status = {
@@ -218,24 +218,18 @@
             
             status.type = 1;
             status.code = c.MSG_STATUS_DB_UPDATE_SUCCESS;
-            status.message =  c.MSG_TEXT_DB_UPDATE_SUCCESS ;
+            status.message =  c.MSG_CHANGE_PARENT_SUCCESS;
             
-            return callback(status, collection);
+            self.updateCompany(q, collection, callback); 
+            //return callback(status, collection);
             
           },
           
-          middleCb = function (status){ 
-              
-              return (!!status.type) ? 
-                              self.updateCompany(q, collection, successCb): 
-                              status;
-          },
-          !!!!!!!!!!!!!!!!!!!
           errorCb = function(err){
             
             status.type = 0;
             status.code = c.MSG_STATUS_DB_UPDATE_ERROR;
-            status.message =  c.MSG_TEXT_DB_UPDATE_ERROR;
+            status.message =  c.MSG_CHANGE_PARENT_ERROR;
             status.obj.push(err);
             
             return callback(status);
@@ -245,10 +239,10 @@
         if (q==null) return errorCb(c.ERR_ID_ISSUE);
         
           
-        this.__changeParents(collection, middleCb);  
+        this.__changeParents(collection, successCb, errorCb);  
         
           
-      },
+      },*/
       
       removeCompany : function(q, callback){
         
@@ -409,21 +403,21 @@
           
       };
       
-        this.__changeParents = function(company, callback){
+        this.__changeParents = function(company, successCb, errorCb){
          
           var companyId = company._id.$oid,
             newParentId = company.parent_id || "",
             oldParentId = this.__tmp_oldParent,
-            newParent = '',
-            oldParent = '',
+            childs = "",
+            newParent = "",
+            oldParent = "",
             changedColl = [],
-            status = {type:1, obj:null},
             
             companies = self.__tmp_collection,
             ln = companies.length;
             
             if (newParentId===oldParentId) {
-              return callback(status);
+              return successCb(c.MSG_CHANGE_PARENT_EQUAL);
             }
             
             if (newParentId && oldParentId){
@@ -466,8 +460,6 @@
               
             }
             
-            var childs = '';
-            
             if (newParent){
              
               childs = (newParent.child_ids)? newParent.child_ids: []; 
@@ -487,29 +479,33 @@
               changedColl.push(oldParent);
             }
             
-            return self.__bindCollection(changedColl, callback);
+            return self.__bindCollection(changedColl, successCb, errorCb);
           
         };
         
-        this.__bindCollection = function (collection, callback){
+        this.__bindCollection = function (collection, successCb, errorCb){
             
             var i = 0,
-              status = {type:0, obj:null},
+              status = {
+                type:0, 
+                issueObj:[]
+              },
               ln = collection.length,
               tries = 0,
               maxTry = 2,
               
-              successCb = function(cb) {
+              innerSuccessCb = function(cb) {
                   
                   if (i<ln) {
                     chain(i, collection);
                     ++i;
                     status.type = 1;
-                    status.obj = cb;
+                    status.issueObj.push[cb];
                   }
-                    return callback(status);
+                    return successCb(status);
               }, 
-              errorCb = function(err) {
+              
+              innerErrorCb = function(err) {
                     
                   ++tries;
                   if (i<1 && tries<maxTry){
@@ -518,14 +514,14 @@
                     chain(i, collection);
                   } else {
                     status.type = 0;
-                    status.obj = err;
+                    status.issueObj.push[err];
                   }
-                  return callback(status);
+                  return errorCb(status);
               };
               
               var chain = function(i, coll){
                 
-                CompanyFactory.update({id:coll[i]._id.$oid}, coll[i], successCb, errorCb);
+                CompanyFactory.update({id:coll[i]._id.$oid}, coll[i], innerSuccessCb, innerErrorCb);
                 
               };
               

@@ -8,7 +8,7 @@
     
     DB_API_URL : "https://api.mongolab.com/api/1/databases/grbdb/collections/",
     DB_API_KEY : "umQLTHlfoM-UB68t6YdiiCzRDByzOUQg",
-    DB_COLLECTION_NAME : "organizations",
+    DB_COLLECTION_NAME : "organizations_test",
     DB_ID_Q: "/:id",
     DB_ID_PARAM :"@id",
     
@@ -45,9 +45,10 @@
     
     ERR_FIND_DESCENDANT     : "problem with find target descendants",
     ERR_PFIND_PARENT        : "problem with find target parent",
-    
+    MSG_CHANGE_PARENT_SUCCESS : "target parents changed",
+    MSG_CHANGE_PARENT_ERROR : "target parents don't changed",
     ERR_SHOW_TREE           : "Cannot create tree for structure, please show this message to youre administrator : ERROR",
-     
+    MSG_CHANGE_PARENT_EQUAL : "newParentId is equal oldParentId",
     });
    
 })();
