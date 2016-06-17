@@ -9,7 +9,7 @@
   function EditCtrl($location, $window, dataService, c) {
  
     var self = this;
-
+    
     this.editTittle = c.H_EDIT;
     
     this.removeTittle = c.H_REMOVE;
@@ -22,6 +22,8 @@
     
     this.messageToClient = "";
     
+    this.responceStatus = "";
+    
     this.errTittle = c.MSG_ERR_USER;
     
     this.query = $location.search() || null;
@@ -33,6 +35,12 @@
     this.save = function(newCollection){
          
         dataService.updateCompany(this.query, newCollection, updateCompanyCallback);
+        
+    };
+    
+    this.remove = function(){
+      
+        dataService.removeCompany(this.query, removeCompanyCallback);
         
     };
     
@@ -61,7 +69,7 @@
     }
     
     function updateCompanyCallback (status, collection){
-    console.log(status);
+   
       (!!status.type) ? 
           $window.location.href= "#/" : 
           self.messageToClient = c.MSG_CLIENT_CODE + 
@@ -72,23 +80,17 @@
                                  status.obj.join();
     }
     
-    this.remove = function(q){
-      
-      var status = {
-        type:0, 
-        obj:{
-          message:""
-        }
-      },
-        callback = function (status){ 
-          console.log(status);
-          $window.location.href= "#/";    
-      };
-         
-      (this.query)? 
-                  dataService.removeCompany(this.query, callback):
-                  status;
-    };
+    function removeCompanyCallback (status, collection){
+    
+      (!!status.type) ? 
+          self.responceStatus =  status.message : 
+          self.messageToClient = c.MSG_CLIENT_CODE + 
+                                 status.code+
+                                 c.MSG_CLIENT_MSG+
+                                 status.message+
+                                 c.MSG_CLIENT_STACK_ERROR+
+                                 status.obj.join();
+    }
     
     this.unlink = function(q){
       

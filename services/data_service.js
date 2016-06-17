@@ -211,15 +211,50 @@
       },
       
       removeCompany : function(q, callback){
-        
+          
           var self = this,
+            status = {
+              type:0,
+              code:"",
+              message:"",
+              obj:[],
+            },
             
-            cb = function (data){ 
-                self.__removeFatherFromChildren(data, callback);
-                self.__removeChildrenFromFather(data, callback);
-            };
+          successCb = function(statCb){
+            
+            status.type = 1;
+            status.code = c.MSG_STATUS_DB_DELETE_SUCCESS;
+            status.message =  c.MSG_USER_TEXT_DB_DELETE_SUCCESS;
+            status.obj.push(statCb);
+            
+            return callback(status);
+          },
+          
+          middleSuccessCb = function(data){
+            
+            status.type = 1;
+            status.code = c.MSG_STATUS_DB_DELETE_SUCCESS;
+            status.message =  c.MSG_TEXT_DB_DELETE_TARG_SUCCESS;
+            
+            self.__removeFatherFromChildren(data, successCb, errorCb);
+            self.__removeChildrenFromFather(data, successCb, errorCb);
+            
+          },
+          
+          errorCb = function(err){
+            
+            status.type = 0;
+            status.code = c.MSG_STATUS_DB_UPDATE_ERROR;
+            status.message =  c.MSG_TEXT_DB_UPDATE_ERROR;
+            status.obj.push(err);
+            
+            return callback(status);
+            
+          };
+            
+        if (q==null) return errorCb(c.ERR_ID_ISSUE);
          
-        CompanyFactory.remove(q, cb);
+        CompanyFactory.remove(q, middleSuccessCb, errorCb);
         
       },
       
@@ -526,31 +561,41 @@
           
         };
         
-        this.__removeFatherFromChildren = function(collection, callback){
+        this.__removeFatherFromChildren = function(collection, successCb, errorCb){
           
             var arr = collection,
               status = {
                 type:1, 
                 obj:[], 
-                message:'done',
+                message:"",
                 ln:0,
                 successQuantity : []
               };
             
-            if (!arr.child_ids || arr.child_ids.length<1) return callback(status);
+            if (!arr.child_ids || arr.child_ids.length<1) {
+              status.type = 1;
+              status.obj.push(c.MSG_TEXT_DB_REM_FATH_FROM_CHILDREN_SUCCESS);
+              return successCb(status);
+            }
             
             var childrensIds = arr.child_ids,
               ln = childrensIds.length,
-              cb = function(data){
+              innerSuccessCb = function(data){
                 status.successQuantity.push(1);
                 ++status.ln;
-                if (status.ln>=chLn) return callback(status);
+                if (status.ln>=chLn) {
+                  status.message = c.MSG_TEXT_DB_REM_FATH_FROM_CHILDREN_SUCCESS
+                  return successCb(status);
+                }
               },
-              errorCb = function(err){
+              innerErrorCb = function(err){
                 status.type = 3;
                 status.obj.push(err);
                 ++status.ln;
-                if (status.ln>=chLn) return callback(status);
+                if (status.ln>=chLn) {
+                  status.message = c.MSG_TEXT_DB_REM_FATH_FROM_CHILDREN_SUCCESS
+                  return errorCb(status);
+                }
               };
             
             var childrens = self.__getChildrens(childrensIds),
@@ -560,41 +605,46 @@
             for (var i = 0; i<chLn; i++ ){
               item = childrens[i];
               item.parent_id = '';
-              CompanyFactory.update({id:item._id.$oid}, item, cb, errorCb);
+              CompanyFactory.update({id:item._id.$oid}, item, innerSuccessCb, innerErrorCb);
             }
              
         };
         
-        this.__removeChildrenFromFather = function(collection, callback){
+        this.__removeChildrenFromFather = function(collection, successCb, errorCb){
           
             var arr = collection,
               selfId = arr._id.$oid,
               status = {
                 type:1, 
                 obj:[], 
-                message:'done',
+                message:"",
               };
             
-            if (!arr.parent_id) return callback(status);
+            if (!arr.parent_id) {
+              status.type = 1;
+              status.obj.push(c.MSG_TEXT_DB_REM_CHILDREN_FROM_FATH_SUCCESS);
+              return successCb(status);
+            }
             
             var fatherIds = arr.parent_id,
               
-              cb = function(data){
+              innerSuccessCb = function(data){
                 status.type = 1;
-                message:'removed from parent';
-                return callback(status);
+                message: c.MSG_TEXT_DB_REM_CHILDREN_FROM_FATH_SUCCESS;
+                return successCb(status);
               },
-              errorCb = function(err){
+              innerErrorCb = function(err){
                 status.type = 0;
+                message: c.MSG_TEXT_DB_REM_CHILDREN_FROM_FATH_ERROR;
                 status.obj.push(err);
-                return callback(status);
+                return errorCb(status);
               };
             
             CompanyFactory.show({id:fatherIds}, function(data){
                 
                 var childrensIds = removeFirstMachItem(data.child_ids, selfId);
                   data.child_ids = childrensIds;
-                  CompanyFactory.update({id:fatherIds},data, cb, errorCb);
+                  CompanyFactory.update({id:fatherIds}, data, innerSuccessCb, innerErrorCb);
             });
             
             function removeFirstMachItem(arr, targ){
