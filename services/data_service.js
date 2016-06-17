@@ -142,9 +142,9 @@
 
             status.type = 1;
             status.code = c.MSG_STATUS_DB_CREATE_SUCCESS;
-            status.message =  c.MSG_TEXT_DB_CREATE_SUCCESS ;
+            status.message =  c.MSG_TEXT_DB_CREATE_SUCCESS;
             
-            return callback(status, collection);
+            return callback(status, cb);
             
           },
           
@@ -179,14 +179,15 @@
             status.code = c.MSG_STATUS_DB_UPDATE_SUCCESS;
             status.message =  c.MSG_TEXT_DB_UPDATE_SUCCESS ;
             
-            return callback(status, collection);
+            return callback(status, cb);
           },
           
-          middleSuccessCb = function(cb){
+          middleSuccessCb = function(statCb){
             
             status.type = 1;
             status.code = c.MSG_STATUS_DB_UPDATE_SUCCESS;
             status.message =  c.MSG_CHANGE_PARENT_SUCCESS;
+            status.obj.push(statCb);
             
             CompanyFactory.update(q, collection, successCb, errorCb);
             
