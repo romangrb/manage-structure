@@ -39,7 +39,7 @@
     }
     
     function createCompanyCallback (status, collection){
-     
+     console.log(status, collection);
       (!!status.type) ? 
           $window.location.href= "#/" : 
           self.messageToClient = c.MSG_CLIENT_CODE + 

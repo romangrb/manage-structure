@@ -135,12 +135,25 @@
             },
           
           successCb = function(cb){
-
+            
+            if (cb.parent_id) self.__changeParents(cb, middleSuccessCb, errorCb);
+            
             status.type = 1;
             status.code = c.MSG_STATUS_DB_CREATE_SUCCESS;
             status.message =  c.MSG_TEXT_DB_CREATE_SUCCESS;
             
             return callback(status, cb);
+            
+          },
+          
+          middleSuccessCb = function(statCb){
+            
+            status.type = 1;
+            status.code = c.MSG_STATUS_DB_UPDATE_SUCCESS;
+            status.message =  c.MSG_CHANGE_PARENT_SUCCESS;
+            status.obj.push(statCb);
+            
+            return callback(status, statCb);
             
           },
           
@@ -279,9 +292,10 @@
             status.type = 1;
             status.code = c.MSG_STATUS_DB_DELETE_SUCCESS;
             
+            self.__setUnlinked(data, successCb, errorCb);
             self.__removeFatherFromChildren(data, successCb, errorCb);
             self.__removeChildrenFromFather(data, successCb, errorCb);
-            self.__setUnlinked(data, successCb, errorCb);
+            
             
           },
           
@@ -669,7 +683,7 @@
               };
             
             CompanyFactory.show({id:fatherIds}, function(data){
-              
+
                 var childrensIds = removeFirstMachItem(data.child_ids, selfId);
                   data.child_ids = childrensIds;
                   CompanyFactory.update({id:fatherIds}, data, innerSuccessCb, innerErrorCb);
