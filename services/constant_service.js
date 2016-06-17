@@ -49,6 +49,10 @@
     MSG_CHANGE_PARENT_ERROR : "target parents don't changed",
     ERR_SHOW_TREE           : "Cannot create tree for structure, please show this message to youre administrator : ERROR",
     MSG_CHANGE_PARENT_EQUAL : "newParentId is equal oldParentId",
+
+    
+    
+    
     });
    
 })();
