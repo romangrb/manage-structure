@@ -40,6 +40,9 @@
     MSG_ERR_USER                 : "unfortunately error has happened, \n please show this message to your administrator \n",
     
     MSG_USER_TEXT_DB_DELETE_SUCCESS : "company deleted successfully",
+    MSG_USER_TEXT_DB_UNLINK_SUCCESS : "company unlinked successfully",
+    MSG_USER_TEXT_DB_DELETE_ERROR : "company unlinked unsuccessfully",
+    MSG_USER_TEXT_DB_UNLINK_ERROR : "company unlinked unsuccessfully",
     
     MSG_ERR_TMP_GENERATE    : "problem with generate temporary collection",
     ERR_ID_ISSUE            : "problem with receive collection ID",

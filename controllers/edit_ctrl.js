@@ -44,6 +44,10 @@
         
     };
     
+    this.unlink = function(q){
+       dataService.unlinkCompany(this.query, unlinkCompanyCallback);
+    };
+    
     function companyCallback (status, collection){
     
       (!!status.type) ? 
@@ -92,23 +96,18 @@
                                  status.obj.join();
     }
     
-    this.unlink = function(q){
-      
-      var status = {
-        type:0, 
-        obj:{
-          message:""
-        }
-      },
-        callback = function (status){ 
-          console.log(status);
-          $window.location.href= "#/";    
-      };
-         
-      (this.query)? 
-                  dataService.unlinkCompany(this.query, callback):
-                  status;
-    };
+    function unlinkCompanyCallback (status, collection){
+    console.log(status);
+      (!!status.type) ? 
+          self.responceStatus =  status.message : 
+          self.messageToClient = c.MSG_CLIENT_CODE + 
+                                 status.code+
+                                 c.MSG_CLIENT_MSG+
+                                 status.message+
+                                 c.MSG_CLIENT_STACK_ERROR+
+                                 status.obj.join();
+    }
+    
     
   }]);
           

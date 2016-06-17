@@ -13,10 +13,6 @@
    
     var Company = {
       
-      constructor : function fn(){
-          this.__isConfig = false;
-      },
-      
       getCompanies : function(callback){
           
           var self = this,
@@ -259,18 +255,50 @@
       },
       
       unlinkCompany : function(q, callback){
-        
+          
           var self = this,
+            status = {
+              type:0,
+              code:"",
+              message:"",
+              obj:[],
+            },
             
-            cb = function (data){ 
-              
-              self.__removeFatherFromChildren(data, callback);
-              self.__removeChildrenFromFather(data, callback);
-              self.__setUnlinked(data, callback);
-              
-            };
-         
-        CompanyFactory.show(q, cb);
+          successCb = function(statCb){
+            
+            status.type = 1;
+            status.code = c.MSG_STATUS_DB_DELETE_SUCCESS;
+            status.message = c.MSG_USER_TEXT_DB_DELETE_SUCCESS;
+            status.obj.push(statCb);
+            
+            return callback(status);
+          },
+          
+          middleSuccessCb = function(data){
+            
+            status.type = 1;
+            status.code = c.MSG_STATUS_DB_DELETE_SUCCESS;
+            
+            self.__removeFatherFromChildren(data, successCb, errorCb);
+            self.__removeChildrenFromFather(data, successCb, errorCb);
+            self.__setUnlinked(data, successCb, errorCb);
+            
+          },
+          
+          errorCb = function(err){
+            
+            status.type = 0;
+            status.code = c.MSG_STATUS_DB_UPDATE_ERROR;
+            status.message =  c.MSG_TEXT_DB_UPDATE_ERROR;
+            status.obj.push(err);
+            
+            return callback(status);
+            
+          };
+            
+        if (q==null) return errorCb(c.ERR_ID_ISSUE);
+
+        CompanyFactory.show(q, middleSuccessCb, errorCb);
         
       },
       
@@ -641,7 +669,7 @@
               };
             
             CompanyFactory.show({id:fatherIds}, function(data){
-                
+              
                 var childrensIds = removeFirstMachItem(data.child_ids, selfId);
                   data.child_ids = childrensIds;
                   CompanyFactory.update({id:fatherIds}, data, innerSuccessCb, innerErrorCb);
@@ -659,31 +687,32 @@
              
         };
         
-        this.__setUnlinked = function(collection, callback){
+        this.__setUnlinked = function(collection, successCb, errorCb){
           
             var item = collection,
               selfId = item._id.$oid,
               status = {
                 type:1, 
                 obj:[], 
-                message:'done',
+                message:"",
               },
               
-              cb = function(data){
+              innerSuccessCb = function(data){
                 status.type = 1;
-                message:'unlinked';
-                return callback(status);
+                message:c.MSG_TEXT_DB_UPDATE_SUCCESS;
+                return successCb(status);
               },
-              errorCb = function(err){
+              
+              innerErrorCb = function(err){
                 status.type = 0;
                 status.obj.push(err);
-                return callback(status);
+                return errorCb(status);
               };
               
               item.parent_id = '',
               item.child_ids = [];
               
-              CompanyFactory.update({id:selfId}, item, cb, errorCb);
+              CompanyFactory.update({id:selfId}, item, innerSuccessCb, innerErrorCb);
               
         };
         
