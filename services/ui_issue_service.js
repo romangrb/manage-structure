@@ -35,7 +35,7 @@
     function PrivProtMeth (status){
       
         var self = this;
-
+        
         this.__getStandartMsgErr = function(status){
           
           return c.MSG_CLIENT_CODE + 
@@ -48,11 +48,9 @@
         
     }
     
+    PrivProtMeth.prototype = Message;
     
-      
-     PrivProtMeth.prototype = Message;
-     
-     return new PrivProtMeth();
+    return new PrivProtMeth();
     
   }]);
     

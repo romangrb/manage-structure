@@ -33,7 +33,7 @@
     this.query = $location.search() || null;
     
     dataService.getCompanyPotentialParents(
-                    this.query, true, 
+                    this.query, false, 
                     UIIS.companyCallback, 
                     {coll : self.potentialParents, 
                      info : self.messageToClient
