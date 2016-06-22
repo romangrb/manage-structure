@@ -2,7 +2,7 @@
   
   <h4 class="text-center">{{editVm.removeTittle}}</h4>
       
-  <div ng-if="editVm.messageToClient" class="container">
+  <div ng-if="editVm.messageToClient.info" class="container">
     <div class="col-xs-12 text-left">
       <a href="#/" class="btn">Back</a>
     </div>
@@ -12,23 +12,23 @@
                 rows="7"
                 readonly="true"
       >
-        {{editVm.messageToClient}}
+        {{editVm.messageToClient.info}}
       </textarea>
     </div>
   </div>
   
-  <h6 ng-if="!editVm.messageToClient" class="text-center"> 
+  <h6 ng-if="!editVm.messageToClient.info" class="text-center"> 
     Are you shure to remove this company ? 
   </h6>
   
-  <h7 class="col-xs-12 text-center">{{editVm.responceStatus}}</h7>
+  <h7 class="col-xs-12 text-center">{{editVm.responceStatus.collections}}</h7>
   
   <div class="col-xs-6 text-center">
     <a href="#/" class="btn">Back</a>
   </div>
   
   <div class="col-xs-6 text-center">
-    <button ng-show="!editVm.responceStatus" 
+    <button ng-show="!editVm.responceStatus.collections" 
             ng-click="editVm.remove()" 
             class="btn btn-danger">Delete
     </button>

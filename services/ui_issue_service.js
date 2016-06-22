@@ -14,7 +14,13 @@
       
       companyCallback : function (status, collection, link){
         (!!status.type) ? 
-          link.coll.collections = collection:
+          link.coll.collections = collection :
+          link.info = this.__getStandartMsgErr(status);
+      },
+      
+      infoCompanyCallback : function (status, link){
+        (!!status.type) ? 
+          link.coll.collections = status.message :
           link.info = this.__getStandartMsgErr(status);
       },
       

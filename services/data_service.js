@@ -50,7 +50,7 @@
          
       },
       
-      getCompany : function(q, callback){
+      getCompany : function(q, callback, link){
                           
           var self = this,
             status = {
@@ -68,7 +68,7 @@
             status.code = c.MSG_STATUS_DB_GET_SUCCESS;
             status.message =  c.MSG_TEXT_DB_GET_SUCCESS ;
             
-            return callback(status, collection);
+            return callback(status, collection, link);
             
           },
           
@@ -79,7 +79,7 @@
             status.message =  c.MSG_TEXT_DB_GET_ERROR;
             status.obj.push(err);
             
-            return callback(status);
+            return callback(status, link);
              
           };  
           
@@ -172,7 +172,7 @@
           
       },
       
-      updateCompany : function(q, collection, callback){
+      updateCompany : function(q, collection, callback, link){
           
           var self = this,
             status = {
@@ -188,7 +188,7 @@
             status.code = c.MSG_STATUS_DB_UPDATE_SUCCESS;
             status.message =  c.MSG_TEXT_DB_UPDATE_SUCCESS ;
             
-            return callback(status, cb);
+            return callback(status, cb, link);
           },
           
           middleSuccessCb = function(statCb){
@@ -209,17 +209,17 @@
             status.message =  c.MSG_TEXT_DB_UPDATE_ERROR;
             status.obj.push(err);
             
-            return callback(status);
+            return callback(status, link);
             
           };
         
         if (q==null) return errorCb(c.ERR_ID_ISSUE);
-        
+       
         this.__changeParents(collection, middleSuccessCb, errorCb); 
           
       },
       
-      removeCompany : function(q, callback){
+      removeCompany : function(q, callback, link){
           
           var self = this,
             status = {
@@ -236,7 +236,7 @@
             status.message =  c.MSG_USER_TEXT_DB_DELETE_SUCCESS;
             status.obj.push(statCb);
             
-            return callback(status);
+            return callback(status, link);
           },
           
           middleSuccessCb = function(data){
@@ -257,7 +257,7 @@
             status.message =  c.MSG_TEXT_DB_UPDATE_ERROR;
             status.obj.push(err);
             
-            return callback(status);
+            return callback(status, link);
             
           };
             
@@ -267,7 +267,7 @@
         
       },
       
-      unlinkCompany : function(q, callback){
+      unlinkCompany : function(q, callback, link){
           
           var self = this,
             status = {
@@ -284,7 +284,7 @@
             status.message = c.MSG_USER_TEXT_DB_DELETE_SUCCESS;
             status.obj.push(statCb);
             
-            return callback(status);
+            return callback(status, link);
           },
           
           middleSuccessCb = function(data){
@@ -306,7 +306,7 @@
             status.message =  c.MSG_TEXT_DB_UPDATE_ERROR;
             status.obj.push(err);
             
-            return callback(status);
+            return callback(status, link);
             
           };
             

@@ -2,7 +2,7 @@
   
   <h4 class="text-center">{{editVm.editTittle}}</h4>
   
-  <div ng-if="editVm.messageToClient" class="container">
+  <div ng-if="editVm.messageToClient.info" class="container">
     <div class="col-xs-12 text-left">
       <a href="#/" class="btn">Back</a>
     </div>
@@ -12,42 +12,42 @@
                 rows="7"
                 readonly="true"
       >
-        {{editVm.messageToClient}}
+        {{editVm.messageToClient.info}}
       </textarea>
     </div>
   </div>
   
-  <form ng-if="!editVm.messageToClient" class="form-horizontal" role="form">
+  <form ng-if="!editVm.messageToClient.info" class="form-horizontal" role="form">
     
-    <div class="form-group" ng-class="{error: editVm.company.name.$invalid}">
+    <div class="form-group" ng-class="{error: editVm.company.collections.name.$invalid}">
       <label for="name" class="control-label col-xs-6">Name</label>
       <div class="col-xs-6 text-center">    
           <input type="text" 
                  class="form-control help-inline" 
                  id="name"
                  name="name" 
-                 ng-model="editVm.company.name"
+                 ng-model="editVm.company.collections.name"
                  placeholder="name ..."
                  required>
                          
-          <span ng-show="editVm.name.$error.required" class="help-inline">
+          <span ng-show="editVm.company.collections.name.$error.required" class="help-inline">
             Required
           </span>
       </div>
     </div>
     
-    <div class="form-group" ng-class="{error: editVm.income.$invalid}">
+    <div class="form-group" ng-class="{error: editVm.company.collections.income.$invalid}">
       <label for="income" class="control-label col-xs-6">estimated annual earning</label>
       <div class="col-xs-6 text-center">    
           <input type="number" 
                  class="form-control help-inline" 
                  id="income"
                  name="income" 
-                 ng-model="editVm.company.income"
+                 ng-model="editVm.company.collections.income"
                  placeholder="0"
                  required>
                
-          <span ng-show="editVm.income.$error.required" class="help-inline">
+          <span ng-show="editVm.company.collections.income.$error.required" class="help-inline">
             Required
           </span>
       </div>
@@ -59,8 +59,8 @@
           <select class="form-control help-inline"
                  id="parent" 
                  name="parent"
-                 ng-model="editVm.company.parent_id"
-                 ng-options="company._id.$oid as company.name for company in editVm.potentialParents"
+                 ng-model="editVm.company.collections.parent_id"
+                 ng-options="company._id.$oid as company.name for company in editVm.potentialParents.collections"
           >
           <option></option>
           
@@ -72,13 +72,9 @@
       <a href="#/" class="btn">Cancel</a>
     </div>
     <div class="col-xs-4 text-center">
-      <button ng-click="editVm.save(editVm.company)" ng-disabled="isClean() || editVm.$invalid"
+      <button ng-click="editVm.save(editVm.company.collections)" ng-disabled="isClean() || editVm.$invalid"
         class="btn btn-primary">Save
       </button>
-    </div>
-    <div class="col-xs-4 text-center">
-      <button ng-click="editVm.destroy()"
-        ng-show="company._id" class="btn btn-danger">Delete</button>
     </div>
  
 </section>

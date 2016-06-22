@@ -4,7 +4,11 @@
   
   angular
       .module('structureMng')
-      .controller('EditCtrl', ['$location', 'dataService', 'uiIssueService', 'constant',
+      .controller('EditCtrl', [
+                '$location', 
+                'dataService', 
+                'uiIssueService', 
+                'constant',
       
   function EditCtrl($location, dataService, UIIS, c) {
  
@@ -16,97 +20,62 @@
     
     this.unlinkTittle = c.H_UNLINK;
     
-    this.potentialParents = "";
+    this.potentialParents = {collections:[]};
     
-    this.company = "",
+    this.company = {collections:[]};
     
-    this.messageToClient = "";
+    this.messageToClient = {info:""};
     
-    this.responceStatus = "";
+    this.responceStatus  = {collections:""};
     
     this.errTittle = c.MSG_ERR_USER;
     
     this.query = $location.search() || null;
     
-    dataService.getCompanyPotentialParents(this.query, false, companyPotentialParentsCallback);
+    dataService.getCompanyPotentialParents(
+                    this.query, true, 
+                    UIIS.companyCallback, 
+                    {coll : self.potentialParents, 
+                     info : self.messageToClient
+                    });
     
-    dataService.getCompany(this.query, companyCallback);
+    dataService.getCompany(
+                    this.query, 
+                    UIIS.companyCallback, 
+                    {coll : self.company, 
+                     info : self.messageToClient
+                    });
     
     this.save = function(newCollection){
          
-        dataService.updateCompany(this.query, newCollection, updateCompanyCallback);
-        
+        dataService.updateCompany(
+                      this.query, 
+                      newCollection, 
+                      UIIS.crudCompanyCallback,
+                      {coll : self.company, 
+                       info : self.messageToClient
+                      });
     };
     
     this.remove = function(){
       
-        dataService.removeCompany(this.query, removeCompanyCallback);
+        dataService.removeCompany(
+                      this.query, 
+                      UIIS.infoCompanyCallback,
+                      {coll : self.responceStatus, 
+                       info : self.messageToClient
+                      });
         
     };
     
-    this.unlink = function(q){
-       dataService.unlinkCompany(this.query, unlinkCompanyCallback);
+    this.unlink = function(){
+      
+       dataService.unlinkCompany(this.query, 
+                      UIIS.infoCompanyCallback,
+                      {coll : self.responceStatus, 
+                       info : self.messageToClient
+                      });
     };
-    
-    function companyCallback (status, collection){
-    
-      (!!status.type) ? 
-          self.company = collection : 
-          self.messageToClient = c.MSG_CLIENT_CODE + 
-                                 status.code+
-                                 c.MSG_CLIENT_MSG+
-                                 status.message+
-                                 c.MSG_CLIENT_STACK_ERROR+
-                                 status.obj.join();
-    }
-                    
-    function companyPotentialParentsCallback (status, collection){
-    
-      (!!status.type) ? 
-          self.potentialParents = collection : 
-          self.messageToClient = c.MSG_CLIENT_CODE + 
-                                 status.code+
-                                 c.MSG_CLIENT_MSG+
-                                 status.message+
-                                 c.MSG_CLIENT_STACK_ERROR+
-                                 status.obj.join();
-    }
-    
-    function updateCompanyCallback (status, collection){
-   
-      (!!status.type) ? 
-          $window.location.href= "#/" : 
-          self.messageToClient = c.MSG_CLIENT_CODE + 
-                                 status.code+
-                                 c.MSG_CLIENT_MSG+
-                                 status.message+
-                                 c.MSG_CLIENT_STACK_ERROR+
-                                 status.obj.join();
-    }
-    
-    function removeCompanyCallback (status, collection){
-    
-      (!!status.type) ? 
-          self.responceStatus =  status.message : 
-          self.messageToClient = c.MSG_CLIENT_CODE + 
-                                 status.code+
-                                 c.MSG_CLIENT_MSG+
-                                 status.message+
-                                 c.MSG_CLIENT_STACK_ERROR+
-                                 status.obj.join();
-    }
-    
-    function unlinkCompanyCallback (status, collection){
-    console.log(status);
-      (!!status.type) ? 
-          self.responceStatus =  status.message : 
-          self.messageToClient = c.MSG_CLIENT_CODE + 
-                                 status.code+
-                                 c.MSG_CLIENT_MSG+
-                                 status.message+
-                                 c.MSG_CLIENT_STACK_ERROR+
-                                 status.obj.join();
-    }
     
     
   }]);
