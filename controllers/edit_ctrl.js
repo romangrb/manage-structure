@@ -4,9 +4,9 @@
   
   angular
       .module('structureMng')
-      .controller('EditCtrl', ['$location', '$window', 'dataService', 'constant',
+      .controller('EditCtrl', ['$location', 'dataService', 'uiIssueService', 'constant',
       
-  function EditCtrl($location, $window, dataService, c) {
+  function EditCtrl($location, dataService, UIIS, c) {
  
     var self = this;
     

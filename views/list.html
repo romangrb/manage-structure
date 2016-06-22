@@ -22,18 +22,18 @@
       <tr>
         <th class="text-center form-inline">
           <div id="custom-search-input">
-            <!--<div class="input-group">-->
-            <!--  <input type="text" -->
-            <!--         class="form-control input-sm search-query"-->
-            <!--         ng-model="search" -->
-            <!--         placeholder="name..."-->
-            <!--  />-->
-            <!--  <span class="input-group-btn">-->
-            <!--      <a class="btn btn-default btn-sm">-->
-            <!--          <i class="glyphicon glyphicon-search"></i>-->
-            <!--      </a>-->
-            <!--  </span>-->
-            <!--</div>-->
+            <div class="input-group">
+              <input type="text" 
+                     class="form-control input-sm search-query"
+                     ng-model="search" 
+                     placeholder="name..."
+              />
+              <span class="input-group-btn">
+                  <a class="btn btn-default btn-sm">
+                      <i class="glyphicon glyphicon-search"></i>
+                  </a>
+              </span>
+            </div>
           </div>
         </th>
         <th class="text-center" colspan="0">estimated earning</th>
@@ -42,9 +42,8 @@
         </th>
       </tr>
     </thead>
-    <!--| filter:search | orderBy:'name'-->
     <tbody>
-      <tr ng-repeat="company in listVm.companies.collections">
+      <tr ng-repeat="company in listVm.companies.collections | filter:search | orderBy:'name'">
         <td class="text-center">{{company.name}}</td>
         <td class="text-center">{{company.income}}</td>
         
