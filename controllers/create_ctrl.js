@@ -4,52 +4,32 @@
   
   angular
       .module('structureMng')
-      .controller('CreateCtrl', ['dataService', '$window', 'constant',
+      .controller('CreateCtrl', ['dataService', 'uiIssueService', 'constant',
           
-  function(dataService, $window, c) {
+  function(dataService, UIIS, c) {
     
     var self = this;
     
     this.tittle = c.H_CREATE;
     
-    this.potentialParents = "";
+    this.potentialParents = {collections:[]};
     
-    this.messageToClient = "";
+    this.messageToClient  = {info:""};
     
     this.errTittle = c.MSG_ERR_USER;
     
-    //dataService.getCompanyPotentialParents(null, true, companyPotentialParentsCallback);
+    dataService.getCompanyPotentialParents(
+                   null, true, 
+                   UIIS.companyCallback, 
+                    {coll : self.potentialParents, 
+                     info: self.messageToClient
+                    });
     
     this.save = function(newCollection){
-         
-      dataService.createCompany(newCollection, createCompanyCallback);
+
+      dataService.createCompany(newCollection, UIIS.crudCompanyCallback);
             
     };
-    
-    function companyPotentialParentsCallback (status, collection){
-     
-      (!!status.type) ? 
-          self.potentialParents = collection : 
-          self.messageToClient = c.MSG_CLIENT_CODE + 
-                                 status.code+
-                                 c.MSG_CLIENT_MSG+
-                                 status.message+
-                                 c.MSG_CLIENT_STACK_ERROR+
-                                 status.obj.join();
-    }
-    
-    function createCompanyCallback (status, collection){
-     console.log(status, collection);
-      (!!status.type) ? 
-          $window.location.href= "#/" : 
-          self.messageToClient = c.MSG_CLIENT_CODE + 
-                                 status.code+
-                                 c.MSG_CLIENT_MSG+
-                                 status.message+
-                                 c.MSG_CLIENT_STACK_ERROR+
-                                 status.obj.join();
-    }
-    
   
   }]);
           

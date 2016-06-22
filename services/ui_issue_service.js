@@ -5,9 +5,10 @@
   angular
       .module('structureMng')
       .service('uiIssueService', [
+            '$window',
             'constant', 
             
-  function (c){
+  function ($window, c){
    
     var Message = {
       
@@ -15,7 +16,13 @@
         (!!status.type) ? 
           link.coll.collections = collection:
           link.info = this.__getStandartMsgErr(status);
-      }
+      },
+      
+      crudCompanyCallback : function (status, collection, link){
+        (!!status.type) ? 
+          $window.location.href= "#/" : 
+          link.info = this.__getStandartMsgErr(status);
+      },
       
     };
        

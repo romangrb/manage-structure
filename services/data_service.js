@@ -89,7 +89,7 @@
           
       },
       
-      getCompanyPotentialParents : function(q, isNew, callback){
+      getCompanyPotentialParents : function(q, isNew, callback, link){
           
           var self = this,
             status = {
@@ -105,7 +105,7 @@
             status.code = c.MSG_STATUS_DB_GET_SUCCESS;
             status.message =  c.MSG_TEXT_DB_GET_SUCCESS ;
             
-            return callback(status, collection);
+            return callback(status, collection, link);
             
           },
           
@@ -116,15 +116,15 @@
             status.message =  c.MSG_TEXT_DB_GET_ERROR;
             status.obj.push(err);
             
-            return callback(status);
+            return callback(status, link);
              
           };
           
-          (!isNew)? this.__searchPotentialParents(q, successCb, errorCb) : this.getCompanies(callback);
+          (!isNew)? this.__searchPotentialParents(q, successCb, errorCb) : this.getCompanies(callback, link);
           
       },
       
-      createCompany : function(collection, callback){
+      createCompany : function(collection, callback, link){
           
           var self = this,
             status = {
@@ -142,7 +142,7 @@
             status.code = c.MSG_STATUS_DB_CREATE_SUCCESS;
             status.message =  c.MSG_TEXT_DB_CREATE_SUCCESS;
             
-            return callback(status, cb);
+            return callback(status, cb, link);
             
           },
           
@@ -153,7 +153,7 @@
             status.message =  c.MSG_CHANGE_PARENT_SUCCESS;
             status.obj.push(statCb);
             
-            return callback(status, statCb);
+            return callback(status, statCb, link);
             
           },
           
@@ -164,7 +164,7 @@
             status.message =  c.MSG_TEXT_DB_CREATE_ERROR;
             status.obj.push(err);
             
-            return callback(status);
+            return callback(status, link);
             
           };
             

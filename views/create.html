@@ -2,7 +2,7 @@
  
   <h4 class="text-center">{{createVm.tittle}}</h4>
   
-  <div ng-if="createVm.messageToClient" class="container">
+  <div ng-if="createVm.messageToClient.info" class="container">
     <div class="col-xs-12 text-left">
       <a href="#/" class="btn">Back</a>
     </div>
@@ -12,12 +12,12 @@
                 rows="7"
                 readonly="true"
       >
-        {{createVm.messageToClient}}
+        {{createVm.messageToClient.info}}
       </textarea>
     </div>
   </div>
    
-  <form ng-if="!createVm.messageToClient" class="form-horizontal" role="form">
+  <form ng-if="!createVm.messageToClient.info" class="form-horizontal" role="form">
     
     <div class="form-group" ng-class="{error: createVm.company.name.$invalid}">
       <label for="name" class="control-label col-xs-6">Name</label>
@@ -61,7 +61,7 @@
                  id="parent" 
                  name="parent"
                  ng-model="createVm.company.parent_id"
-                 ng-options="company._id.$oid as company.name for company in createVm.potentialParents"
+                 ng-options="company._id.$oid as company.name for company in createVm.potentialParents.collections"
           >
           <option></option>
           
