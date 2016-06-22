@@ -5,30 +5,37 @@
   angular
       .module('structureMng')
       .service('uiIssueService', [
-            'constant',
+            'constant', 
             
   function (c){
    
     var Message = {
       
-      getMessage : function(callback){
-          
-      },
+      companyCallback : function (status, collection, link){
+        (!!status.type) ? 
+          link.coll.collections = collection:
+          link.info = this.__getStandartMsgErr(status);
+      }
       
     };
        
-    function PrivProtMeth (){
+    function PrivProtMeth (status){
       
         var self = this;
-        
-        this.__get = function(company, collection){
-            
+
+        this.__getStandartMsgErr = function(status){
           
-                  
+          return c.MSG_CLIENT_CODE + 
+                 status.code+
+                 c.MSG_CLIENT_MSG+
+                 status.message+
+                 c.MSG_CLIENT_STACK_ERROR+
+                 status.obj.join();
         }
-          
         
     }
+    
+    
       
      PrivProtMeth.prototype = Message;
      

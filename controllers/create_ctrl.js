@@ -18,7 +18,7 @@
     
     this.errTittle = c.MSG_ERR_USER;
     
-    dataService.getCompanyPotentialParents(null, true, companyPotentialParentsCallback);
+    //dataService.getCompanyPotentialParents(null, true, companyPotentialParentsCallback);
     
     this.save = function(newCollection){
          

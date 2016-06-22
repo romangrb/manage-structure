@@ -13,7 +13,7 @@
    
     var Company = {
       
-      getCompanies : function(callback){
+      getCompanies : function(callback, link){
           
           var self = this,
             status = {
@@ -30,8 +30,8 @@
             status.type = 1;
             status.code = c.MSG_STATUS_DB_GET_SUCCESS;
             status.message =  c.MSG_TEXT_DB_GET_SUCCESS ;
-            
-            return callback(status, collection);
+
+            return callback(status, collection, link);
             
           },
           
@@ -42,7 +42,7 @@
             status.message =  c.MSG_TEXT_DB_GET_ERROR;
             status.obj.push(err);
             
-            return callback(status);
+            return callback(status, link);
              
           };
           
