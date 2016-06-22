@@ -8,7 +8,7 @@
     
     DB_API_URL : "https://api.mongolab.com/api/1/databases/grbdb/collections/",
     DB_API_KEY : "umQLTHlfoM-UB68t6YdiiCzRDByzOUQg",
-    DB_COLLECTION_NAME : "organizations_test",
+    DB_COLLECTION_NAME : "organizations",
     DB_ID_Q: "/:id",
     DB_ID_PARAM :"@id",
     

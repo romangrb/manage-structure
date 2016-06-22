@@ -1,15 +1,16 @@
   Organizational structure application
 
-a. You can run project by :
-
-     http://romangrb.github.io/manage-structure
-
-b. Clone and quick bind
+a. You can run project by link 
+  
+  1. run:
+  
+     https://romangrb.github.io/manage-structure
+    
+b. Clone and quick bind 
 
   1. Install bower :
     
      http://bower.io
-  
 
   2. Clone project :
  
